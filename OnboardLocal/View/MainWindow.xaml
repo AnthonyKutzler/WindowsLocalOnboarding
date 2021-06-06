@@ -1,0 +1,66 @@
+﻿<Window x:Class="OnboardLocal.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OnboardLocal"
+        mc:Ignorable="d" Title="Onboard" Height="350" Width="605">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Run Application">
+                <Canvas>
+                    <StackPanel Margin="25">
+                        <Label>Onboarding Excel File</Label>
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBox Name="filePath" Height="20" Width="300" IsReadOnly="True"/>
+                            <Button Click="ChooseFile_OnClick" Content="Choose.." MinWidth="90" Margin="5,0,0,0"></Button>
+                            <Button Click="CreateFile_OnClick" Content="Create" MinWidth="90" Margin="5,0,0,0"></Button>
+                        </StackPanel>
+                        <StackPanel Margin="0,15,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Margin="5">
+                                    <Label>Amazon Email</Label>
+                                    <TextBox Name="amzEmail" Height="20" Width="250"/>
+                                </StackPanel>
+                                <StackPanel Margin="5">
+                                    <Label>Amazon Password</Label>
+                                    <PasswordBox Name="amzPassword" Height="20" Width="250"/>
+                                </StackPanel>
+                            </StackPanel>
+                        
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Margin="5">
+                                    <Label>Quest Login</Label>
+                                    <TextBox Name="questUsername" Height="20" Width="250"/>
+                                </StackPanel>
+                                <StackPanel Margin="5">
+                                    <Label>Quest Password</Label>
+                                    <PasswordBox Name="questPassword" Height="20" Width="250"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,5 ,0">
+                                <Label Content="Saved √" Margin="0,0, 10, 0" Foreground="LimeGreen" Visibility="Hidden"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <Button Click="Run_OnClick" Content="Run" MinWidth="50" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+                    </StackPanel>
+                </Canvas>
+            </TabItem>
+            <TabItem Header="Cortex Xpath's (NYI)">
+                <Canvas>
+                    <StackPanel Margin="15">
+                        <Label Content=""/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Height="20" Width="300"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Canvas>
+                
+            </TabItem>
+            <TabItem Header="Quest Xpath's (NYI)">
+                
+                
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
