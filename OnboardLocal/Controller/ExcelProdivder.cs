@@ -47,7 +47,7 @@ namespace OnboardLocal.Controller
             return people;
         }
 
-        private bool Save(IEnumerable<Person> people)
+        public bool Save(IEnumerable<Person> people)
         {
             foreach(var person in people)
             {
@@ -78,9 +78,9 @@ namespace OnboardLocal.Controller
             _excelWorksheet.Cells[1, 6] = "Drug";
             _excelWorksheet.Cells[1, 7] = "Change";
             _excelWorksheet.Cells[1, 8] = "Class";
-            
-            Close(Path.Combine(Environment.CurrentDirectory, "data") + @"/onboard.xlsx");
-            return "";
+            var path = Path.Combine(Environment.CurrentDirectory, "data") + @"/onboard.xlsx";
+            Close(path);
+            return path;
         }
 
         private void Close(string path)

@@ -14,3 +14,5 @@ C:\Users\gob\RiderProjects\OnboardLocal\OnboardLocal\obj\Debug\View\MainWindow.g
 C:\Users\gob\RiderProjects\OnboardLocal\OnboardLocal\obj\Debug\View\MainWindow.baml
 C:\Users\gob\RiderProjects\OnboardLocal\OnboardLocal\obj\Debug\View\App.g.cs
 C:\Users\gob\RiderProjects\OnboardLocal\OnboardLocal\obj\Debug\OnboardLocal_Content.g.cs
+C:\Users\gob\RiderProjects\OnboardLocal\OnboardLocal\obj\Debug\Interop.Microsoft.Office.Core.dll
+C:\Users\gob\RiderProjects\OnboardLocal\OnboardLocal\obj\Debug\OnboardLocal.csproj.ResolveComReference.cache

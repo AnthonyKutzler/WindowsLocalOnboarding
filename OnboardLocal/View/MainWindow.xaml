@@ -12,7 +12,7 @@
                     <StackPanel Margin="25">
                         <Label>Onboarding Excel File</Label>
                         <StackPanel Orientation="Horizontal" >
-                            <TextBox Name="filePath" Height="20" Width="300" IsReadOnly="True"/>
+                            <TextBox Name="FilePath" Height="20" Width="300" IsReadOnly="True"/>
                             <Button Click="ChooseFile_OnClick" Content="Choose.." MinWidth="90" Margin="5,0,0,0"></Button>
                             <Button Click="CreateFile_OnClick" Content="Create" MinWidth="90" Margin="5,0,0,0"></Button>
                         </StackPanel>
@@ -20,29 +20,37 @@
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel Margin="5">
                                     <Label>Amazon Email</Label>
-                                    <TextBox Name="amzEmail" Height="20" Width="250"/>
+                                    <TextBox Name="AmzEmail" Height="20" Width="250"/>
                                 </StackPanel>
                                 <StackPanel Margin="5">
                                     <Label>Amazon Password</Label>
-                                    <PasswordBox Name="amzPassword" Height="20" Width="250"/>
+                                    <PasswordBox Name="AmzPassword" Height="20" Width="250"/>
                                 </StackPanel>
                             </StackPanel>
                         
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel Margin="5">
                                     <Label>Quest Login</Label>
-                                    <TextBox Name="questUsername" Height="20" Width="250"/>
+                                    <TextBox Name="QuestUsername" Height="20" Width="250"/>
                                 </StackPanel>
                                 <StackPanel Margin="5">
                                     <Label>Quest Password</Label>
-                                    <PasswordBox Name="questPassword" Height="20" Width="250"/>
+                                    <PasswordBox Name="QuestPassword" Height="20" Width="250"/>
                                 </StackPanel>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,5 ,0">
-                                <Label Content="Saved √" Margin="0,0, 10, 0" Foreground="LimeGreen" Visibility="Hidden"/>
-                            </StackPanel>
                         </StackPanel>
-                        <Button Click="Run_OnClick" Content="Run" MinWidth="50" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+                        <Label Content="When to schedule Drug Screening (After Background:" Margin="0, 10,0,0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,9">
+                            <RadioButton x:Name="BgPass" Checked="HandleCheck" Content="Passed"></RadioButton>
+                            <RadioButton x:Name="BgPend" Margin="20,0,0,0" Checked="HandleCheck" Content="Pending"></RadioButton>
+                            <RadioButton x:Name="PreBg" Margin="20,0,0,0" Checked="HandleCheck" Content="Pre-Background"></RadioButton>
+                            
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,5 ,0">
+                            <Label Name="SuccessCondition" Content="" Margin="0,0, 0, 0" Foreground="Red" Visibility="Hidden"/>
+                        
+                            <Button Click="Run_OnClick" Content="Run" MinWidth="50" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+                        </StackPanel>
                     </StackPanel>
                 </Canvas>
             </TabItem>
@@ -53,6 +61,9 @@
                         <StackPanel Orientation="Horizontal">
                             <TextBox Height="20" Width="300"/>
                         </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,5 ,0">
+                        <Label Content="Saved √" Margin="0,0, 0, 0" Foreground="LimeGreen" Visibility="Hidden"/>
                     </StackPanel>
                 </Canvas>
                 

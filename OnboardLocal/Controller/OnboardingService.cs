@@ -12,42 +12,33 @@ namespace OnboardLocal.Controller
 {
     public class OnboardingService
     {
-        public string RunApplication(string amzUsername, string amzPassword, string questUsername, string questPassword, string excelPath)
+        private IEnumerable<Person> _all;
+        private IEnumerable<Person> _filter;
+        
+        public void RunApplication(MainWindow window)
         {
-            IEnumerable<Person> all = new ExcelService(excelPath).GetPeople();
-            //Filter Backgrounds
-            var filter = all.Where(person => person.Background == "Pending" || person.Background == "");
-            all = all.Where(person => person.Background != "Pending" && person.Background != "");
+            //TODO Try/ Catch on View to display error, move away from excel and use application to view results, with sqlite
+            var excel = new ExcelService(window.FilePath.Text);
+            _all = excel.GetPeople();
+            FilterBackgrounds();
             IWebDriver driver = StartDriver();
-            //Combine lists
-            all = all.Concat(UpdatePeople(filter, new CortexService(driver, amzUsername, amzPassword)));
-            //Filter Drug Tests
-            filter = all.Where(person => person.Background == "Passed" && (person.Drug != "Positive" || person.Drug != "Negative" || person.Drug != "Expired"));
-            all = all.Where(person => !(person.Background == "Passed" && (person.Drug != "Positive" || person.Drug != "Negative" || person.Drug != "Expired")));
-            //Combine Again
-            all = all.Concat(UpdatePeople(filter, new QuestService(driver, questUsername, questPassword)));
+            _all = _all.Concat(UpdatePeople(_filter, new Cortex(window.AmzEmail.Text, window.AmzPassword.Password, driver)));
+            FilterDrugScreens(window.DrugScreen);
+            _all = _all.Concat(UpdatePeople(_filter, new Quest(window.QuestUsername.Text, window.QuestPassword.Password, driver)));
+            excel.Save(_all);
             
-            return "Success";
         }
 
-        private IEnumerable<Person> UpdatePeople(IEnumerable<Person> people, IWebService service)
+        private static IEnumerable<Person> UpdatePeople(IEnumerable<Person> people, IWebService service)
         {
             while (service.Login())
             {
-                foreach (var person in (Person[])people)
+                var people1 = (Person[]) people;
+                for (var i = 0; i < people1.Length; i++)
                 {
                     service.Setup();
-                    var updateText = service.Search((service is CortexService ? person.Email : Regex.Replace(person.Phone, "[\\D+]", "")));
-                    if ((service is CortexService cortexService))
-                    {
-                        person.Background = updateText;
-                        person.Email = cortexService.GetEmail();
-                        person.Phone = cortexService.GetPhoneNumber();
-                    }
-                    else
-                    {
-                        person.Drug = updateText;
-                    }
+                    people1[i] = service.Search(people1[i]);
+                    
                 }
             }
             return people;
@@ -55,7 +46,7 @@ namespace OnboardLocal.Controller
 
         private IWebDriver StartDriver()
         {
-            ChromeOptions options = new ChromeOptions();
+            var options = new ChromeOptions();
             options.AddArguments("start-maximized");
             options.AddArguments("enable-automation");
             options.AddArguments("--no-sandbox");
@@ -65,6 +56,31 @@ namespace OnboardLocal.Controller
             options.AddArguments("--disable-gpu");
             options.AddArgument(@$"user-data-dir=${Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}AppData\Local\Google\Chrome\User Data\Default");
             return new ChromeDriver(@$"${System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().CodeBase)}chromedriver.exe",options);
+        }
+
+        private void FilterBackgrounds()
+        {
+            _filter = _all.Where(person => person.Background == "Pending" || person.Background == "");
+            _all = _all.Where(person => person.Background != "Pending" && person.Background != "");
+        }
+
+        private void FilterDrugScreens(int when)
+        {
+            var BackgroundText = "Passed";
+            switch (when)
+            {
+                case 1:
+                    BackgroundText = "Pending";
+                    break;
+                case 2:
+                    BackgroundText = "";
+                    break;
+                default:
+                    BackgroundText = "Passed";
+                    break;
+            }
+            _filter = _all.Where(person => person.Background == BackgroundText && (person.Drug != "Positive" || person.Drug != "Negative" || person.Drug != "Expired"));
+            _all = _all.Where(person => !(person.Background == BackgroundText && (person.Drug != "Positive" || person.Drug != "Negative" || person.Drug != "Expired")));
         }
 
 
