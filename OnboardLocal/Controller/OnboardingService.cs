@@ -21,10 +21,15 @@ namespace OnboardLocal.Controller
             var excel = new ExcelService(window.FilePath.Text);
             _all = excel.GetPeople();
             FilterBackgrounds();
-            IWebDriver driver = StartDriver();
+            var driver = StartDriver();
+            //Check for backgrounds
             _all = _all.Concat(UpdatePeople(_filter, new Cortex(window.AmzEmail.Text, window.AmzPassword.Password, driver)));
             FilterDrugScreens(window.DrugScreen);
+            //check for drug tests
             _all = _all.Concat(UpdatePeople(_filter, new Quest(window.QuestUsername.Text, window.QuestPassword.Password, driver)));
+            FilterNewDrugTests(window.DrugScreen);
+            //setup new drug tests
+            _all = _all.Concat(new Quest(window.QuestUsername.Text, window.QuestPassword.Password, driver).SetupNewTests(_filter));
             excel.Save(_all);
             
         }
@@ -38,13 +43,12 @@ namespace OnboardLocal.Controller
                 {
                     service.Setup();
                     people1[i] = service.Search(people1[i]);
-                    
                 }
             }
             return people;
         }
 
-        private IWebDriver StartDriver()
+        private static IWebDriver StartDriver()
         {
             var options = new ChromeOptions();
             options.AddArguments("start-maximized");
@@ -64,23 +68,43 @@ namespace OnboardLocal.Controller
             _all = _all.Where(person => person.Background != "Pending" && person.Background != "");
         }
 
-        private void FilterDrugScreens(int when)
+        private void FilterNewDrugTests(int when)
         {
-            var BackgroundText = "Passed";
+            var backgroundText = "Passed";
             switch (when)
             {
                 case 1:
-                    BackgroundText = "Pending";
+                    backgroundText = "Pending";
                     break;
                 case 2:
-                    BackgroundText = "";
+                    backgroundText = "";
                     break;
                 default:
-                    BackgroundText = "Passed";
+                    backgroundText = "Passed";
                     break;
             }
-            _filter = _all.Where(person => person.Background == BackgroundText && (person.Drug != "Positive" || person.Drug != "Negative" || person.Drug != "Expired"));
-            _all = _all.Where(person => !(person.Background == BackgroundText && (person.Drug != "Positive" || person.Drug != "Negative" || person.Drug != "Expired")));
+            _filter = _all.Where(person => person.Background == backgroundText && person.Drug == "");
+            _all = _all.Where(person => !(person.Background == backgroundText && person.Drug == ""));
+
+        }
+
+        private void FilterDrugScreens(int when)
+        {
+            var backgroundText = "Passed";
+            switch (when)
+            {
+                case 1:
+                    backgroundText = "Pending";
+                    break;
+                case 2:
+                    backgroundText = "";
+                    break;
+                default:
+                    backgroundText = "Passed";
+                    break;
+            }
+            _filter = _all.Where(person => person.Background == backgroundText && (person.Drug != "Positive" || person.Drug != "Negative" || person.Drug != "Expired"));
+            _all = _all.Where(person => !(person.Background == backgroundText && (person.Drug != "Positive" || person.Drug != "Negative" || person.Drug != "Expired")));
         }
 
 
