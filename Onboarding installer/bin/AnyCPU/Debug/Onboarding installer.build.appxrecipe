@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Machine>DESKTOP-1LKF320</Machine>
+    <WindowsUser>gob</WindowsUser>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetOsVersion>10.0</TargetOsVersion>
+    <TargetOsDescription>Windows 10.0</TargetOsDescription>
+    <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
+    <PackageArchitecture>neutral</PackageArchitecture>
+    <PackageIdentityName>OnboardingTracker</PackageIdentityName>
+    <PackageIdentityPublisher>CN=Anthony Kutzler</PackageIdentityPublisher>
+    <IntermediateOutputPath>C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\obj\Debug\</IntermediateOutputPath>
+    <RemoteDeploymentType></RemoteDeploymentType>
+    <PackageRegistrationPath></PackageRegistrationPath>
+    <RemoveNonLayoutFiles>true</RemoveNonLayoutFiles>
+    <DeployOptionalPackages>false</DeployOptionalPackages>
+    <WindowsSdkPath></WindowsSdkPath>
+    <LayoutDir>C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\bin\AnyCPU\Debug\AppX</LayoutDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <AppXManifest Include="C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\bin\AnyCPU\Debug\AppxManifest.xml">
+      <PackagePath>AppxManifest.xml</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppXManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxPackagedFile Include="C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\Images\SplashScreen.scale-200.png">
+      <PackagePath>Images\SplashScreen.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\Images\LockScreenLogo.scale-200.png">
+      <PackagePath>Images\LockScreenLogo.scale-200.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\Images\Square150x150Logo.scale-200.png">
+      <PackagePath>Images\Square150x150Logo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\Images\Square44x44Logo.scale-200.png">
+      <PackagePath>Images\Square44x44Logo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\Images\Square44x44Logo.targetsize-24_altform-unplated.png">
+      <PackagePath>Images\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\Images\StoreLogo.png">
+      <PackagePath>Images\StoreLogo.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\Images\Wide310x150Logo.scale-200.png">
+      <PackagePath>Images\Wide310x150Logo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\bin\AnyCPU\Debug\resources.pri">
+      <PackagePath>resources.pri</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gob\RiderProjects\OnboardLocal\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll">
+      <PackagePath>OnboardLocal\EntityFramework.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gob\RiderProjects\OnboardLocal\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll">
+      <PackagePath>OnboardLocal\EntityFramework.SqlServer.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gob\RiderProjects\OnboardLocal\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll">
+      <PackagePath>OnboardLocal\Microsoft.Office.Interop.Excel.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gob\RiderProjects\OnboardLocal\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.114.0\lib\net46\System.Data.SQLite.dll">
+      <PackagePath>OnboardLocal\System.Data.SQLite.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gob\RiderProjects\OnboardLocal\packages\System.Data.SQLite.EF6.1.0.114.0\lib\net46\System.Data.SQLite.EF6.dll">
+      <PackagePath>OnboardLocal\System.Data.SQLite.EF6.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gob\RiderProjects\OnboardLocal\packages\System.Data.SQLite.Linq.1.0.114.0\lib\net46\System.Data.SQLite.Linq.dll">
+      <PackagePath>OnboardLocal\System.Data.SQLite.Linq.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gob\RiderProjects\OnboardLocal\packages\Selenium.WebDriver.4.0.0-beta2\lib\net48\WebDriver.dll">
+      <PackagePath>OnboardLocal\WebDriver.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft Visual Studio\Shared\Visual Studio Tools for Office\PIA\Office15\office.dll">
+      <PackagePath>OnboardLocal\office.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft Visual Studio\Shared\Visual Studio Tools for Office\PIA\Office15\Microsoft.Vbe.Interop.dll">
+      <PackagePath>OnboardLocal\Microsoft.Vbe.Interop.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft Visual Studio\2019\Community\Common7\IDE\PublicAssemblies\stdole.dll">
+      <PackagePath>OnboardLocal\stdole.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gob\RiderProjects\OnboardLocal\packages\SQLite.3.13.0\runtimes\win7-x86\native\sqlite3.dll">
+      <PackagePath>OnboardLocal\x86\sqlite3.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gob\RiderProjects\OnboardLocal\packages\SQLite.3.13.0\runtimes\win7-x64\native\sqlite3.dll">
+      <PackagePath>OnboardLocal\x64\sqlite3.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gob\RiderProjects\OnboardLocal\OnboardLocal\bin\Debug\OnboardLocal.exe">
+      <PackagePath>OnboardLocal\OnboardLocal.exe</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gob\RiderProjects\OnboardLocal\OnboardLocal\bin\Debug\OnboardLocal.exe.config">
+      <PackagePath>OnboardLocal\OnboardLocal.exe.config</PackagePath>
+    </AppxPackagedFile>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+</Project>

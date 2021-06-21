@@ -1,0 +1,37 @@
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\bin\AnyCPU\Debug\OnboardLocal\EntityFramework.dll
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\bin\AnyCPU\Debug\OnboardLocal\EntityFramework.SqlServer.dll
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\bin\AnyCPU\Debug\OnboardLocal\Microsoft.Office.Interop.Excel.dll
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\bin\AnyCPU\Debug\OnboardLocal\System.Data.SQLite.dll
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\bin\AnyCPU\Debug\OnboardLocal\System.Data.SQLite.EF6.dll
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\bin\AnyCPU\Debug\OnboardLocal\System.Data.SQLite.Linq.dll
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\bin\AnyCPU\Debug\OnboardLocal\WebDriver.dll
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\bin\AnyCPU\Debug\OnboardLocal\office.dll
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\bin\AnyCPU\Debug\OnboardLocal\Microsoft.Vbe.Interop.dll
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\bin\AnyCPU\Debug\OnboardLocal\stdole.dll
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\bin\AnyCPU\Debug\OnboardLocal\x86\sqlite3.dll
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\bin\AnyCPU\Debug\OnboardLocal\x64\sqlite3.dll
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\bin\AnyCPU\Debug\OnboardLocal\OnboardLocal.exe
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\bin\AnyCPU\Debug\OnboardLocal\OnboardLocal.exe.config
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\bin\AnyCPU\Debug\OnboardLocal\OnboardLocal.pdb
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\bin\AnyCPU\Debug\resources.pri
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\bin\AnyCPU\Debug\AppxManifest.xml
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\bin\AnyCPU\Debug\Onboarding installer.build.appxrecipe
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\obj\Debug\Onboarding installer.wapprojAssemblyReference.cache
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\obj\Debug\Onboarding installer.wapproj.CoreCompileInputs.cache
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\obj\Debug\priconfig.xml
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\obj\Debug\priconfig.xml.intermediate
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\obj\Debug\unfiltered.layout.resfiles
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\obj\Debug\unfiltered.layout.resfiles.intermediate
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\obj\Debug\filtered.layout.resfiles
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\obj\Debug\filtered.layout.resfiles.intermediate
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\obj\Debug\excluded.layout.resfiles
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\obj\Debug\excluded.layout.resfiles.intermediate
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\obj\Debug\resources.resfiles
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\obj\Debug\resources.resfiles.intermediate
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\obj\Debug\pri.resfiles
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\obj\Debug\pri.resfiles.intermediate
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\obj\Debug\qualifiers.txt
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\obj\Debug\qualifiers.txt.intermediate
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\obj\Debug\MultipleQualifiersPerDimensionFound.txt
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\obj\Debug\ProjectArchitectures.txt
+C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\obj\Debug\Onboarding installer.wapproj.LastBuild.txt

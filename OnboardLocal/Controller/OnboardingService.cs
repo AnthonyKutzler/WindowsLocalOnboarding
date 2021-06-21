@@ -58,8 +58,8 @@ namespace OnboardLocal.Controller
             options.AddArguments("--disable-dev-shm-usage");
             options.AddArguments("--disable-browser-side-navigation");
             options.AddArguments("--disable-gpu");
-            options.AddArgument(@$"user-data-dir=${Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}AppData\Local\Google\Chrome\User Data\Default");
-            return new ChromeDriver(@$"${System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().CodeBase)}chromedriver.exe",options);
+            options.AddArgument($@"user-data-dir=${Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}AppData\Local\Google\Chrome\User Data\Default");
+            return new ChromeDriver($@"${System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().CodeBase)}chromedriver.exe",options);
         }
 
         private void FilterBackgrounds()
