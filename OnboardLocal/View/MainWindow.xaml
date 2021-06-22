@@ -85,7 +85,7 @@
                             
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,5 ,0">
-                            <Label Name="SettingsSaved" Content="Saved √" Margin="0,0, 0, 0" Foreground="LimeGreen" VerticalAlignment="Bottom"/>
+                            <Label Name="SettingsSaved" Content="Saved √" Margin="0,0, 0, 0" Foreground="LimeGreen" VerticalAlignment="Bottom" Visibility="Hidden"/>
                             <Button Click="QuestSave_OnClick" Content="Save" MinWidth="50" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
                         </StackPanel>
                     </StackPanel>
