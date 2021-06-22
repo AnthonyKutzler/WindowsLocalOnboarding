@@ -18,6 +18,11 @@ namespace OnboardLocal
         public MainWindow()
         {
             InitializeComponent();
+            AccountNumber.Text = Properties.Settings.Default.AccountId;
+            OrderCode.Text = Properties.Settings.Default.OrderCode;
+            LocationCode.Text = Properties.Settings.Default.CollectionSite;
+            BadgeId.Text = Properties.Settings.Default.BadgeId;
+            StationCode.Text = Properties.Settings.Default.StationCode;
             
             //Load Preferences
         }
@@ -30,6 +35,7 @@ namespace OnboardLocal
         
         private void CreateFile_OnClick(object sender, RoutedEventArgs e)
         {
+            
             if (ExcelInstalled())
             {
                 FilePath.Text = new ExcelService("").CreateTemplate();
@@ -80,9 +86,19 @@ namespace OnboardLocal
                     break;
             }
         }
-        
 
-        
+        private void QuestSave_OnClick(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.AccountId = AccountNumber.Text;
+            Properties.Settings.Default.OrderCode = OrderCode.Text;
+            Properties.Settings.Default.CollectionSite = LocationCode.Text;
+            Properties.Settings.Default.BadgeId = BadgeId.Text;
+            Properties.Settings.Default.StationCode = StationCode.Text;
+
+            SettingsSaved.Visibility = Visibility.Visible;
+
+        }
+
     }
 
     

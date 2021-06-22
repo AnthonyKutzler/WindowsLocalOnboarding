@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using OnboardLocal.Model;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
@@ -20,6 +21,7 @@ namespace OnboardLocal.Controller
         private const string NewTestUrl = "https://esp.employersolutions.com/ImportOrder/Index";
         private const string SearchUrl = "https://esp.employersolutions.com/Results/Summary";
         private const string BodyXpath = "//*[@id=\"table-items\"]";
+        private const string Csv = "";
 
         public Quest(string user, string pass, IWebDriver driver)
         {
@@ -91,9 +93,17 @@ namespace OnboardLocal.Controller
             var oldPeople = (Person[])people;
             try
             {
-                foreach (var person in (Person[])people)
+                using (var writer = new StreamWriter(Csv))
                 {
-                    //Add to CSV for later import..... need more info from settings.. TODO: Account#, DrugTest Code, Location Code..
+                    var line =
+                        @"Primary ID, First Name, Last Name, Primary Phone, Date of Birth, Account Number, Modality, Client Site Location, Order Code(s), Collection Type, Reason for Test, Order Expiration Date, Order Expiration Time, Collection Site Code, Observed, Email(s)";
+                    writer.Write(line);
+                    writer.Flush();
+                    foreach (var person in (Person[]) people)
+                    {
+                        
+                        //Add to CSV for later import..... need more info from settings.. TODO: Account#, DrugTest Code, Location Code..
+                    }
                 }
 
                 return people;
