@@ -2,7 +2,7 @@ namespace OnboardLocal.Model
 {
     public class Person
     {
-        public int Line { get; set; }
+        public int Pk { get; set; }
         public string FirstName { get; set; }
         public string Lastname { get; set; }
         public string Phone { get; set; }
@@ -10,17 +10,23 @@ namespace OnboardLocal.Model
         public string Background { get; set; } = "";
         public string Drug { get; set; } = "";
         public bool Change { get; set; } = false;
-        
-        public void ExcelLineToPerson(string[] values)
+
+        public override string ToString()
         {
-            FirstName = values[0];
-            Lastname = values[1];
-            Phone = values[2];
-            Email = values[3];
-            Background = values[4];
-            Drug = values[5];
+            return $"${FirstName}, ${Lastname}, ${Phone}, ${Email}, ${Background}, ${Drug}";
         }
-        
+
+        public Person(int pk, string firstName, string lastname, string phone, string email, string background, string drug, bool change)
+        {
+            Pk = pk;
+            FirstName = firstName;
+            Lastname = lastname;
+            Phone = phone;
+            Email = email;
+            Background = background;
+            Drug = drug;
+            Change = change;
+        }
     }
     
     

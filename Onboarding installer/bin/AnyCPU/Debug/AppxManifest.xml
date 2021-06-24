@@ -36,7 +36,6 @@
     <build:Item Name="Microsoft.Build.DesktopBridge.Tasks.dll" Version="4.6.30319.200" />
     <build:Item Name="TargetFrameworkMoniker" Value=".NETFramework,Version=v4.5.1" />
     <build:Item Name="VisualStudio" Version="16.0" />
-    <build:Item Name="VisualStudioEdition" Value="Microsoft Visual Studio Community 2019" />
     <build:Item Name="OperatingSystem" Version="10.0.19041.1 (WinBuild.160101.0800)" />
     <build:Item Name="Microsoft.Build.AppxPackage.dll" Version="16.0.31228.383" />
     <build:Item Name="ProjectGUID" Value="1b08b5a4-3ce1-40f7-9123-90e832a7ff0a" />

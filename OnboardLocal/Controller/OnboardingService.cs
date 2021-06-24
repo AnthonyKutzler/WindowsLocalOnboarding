@@ -18,8 +18,8 @@ namespace OnboardLocal.Controller
         public void RunApplication(MainWindow window)
         {
             //TODO Try/ Catch on View to display error, move away from excel and use application to view results, with sqlite
-            var excel = new ExcelService(window.FilePath.Text);
-            _all = excel.GetPeople();
+            var peopleProvider = new PeopleProvider();
+            _all = peopleProvider.GetPeople();
             FilterBackgrounds();
             var driver = StartDriver();
             //Check for backgrounds
@@ -30,7 +30,7 @@ namespace OnboardLocal.Controller
             FilterNewDrugTests(window.DrugScreen);
             //setup new drug tests
             _all = _all.Concat(new Quest(window.QuestUsername.Text, window.QuestPassword.Password, driver).SetupNewTests(_filter));
-            excel.Save(_all);
+            peopleProvider.UpdatePeople(_all);
             
         }
 

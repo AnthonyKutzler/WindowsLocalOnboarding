@@ -4,19 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OnboardLocal"
+        xmlns:model="clr-namespace:OnboardLocal.Model"
         mc:Ignorable="d" Title="Onboard" Height="350" Width="605">
     <Grid>
         <TabControl>
             <TabItem Header="Run Application">
                 <Canvas>
                     <StackPanel Margin="25">
-                        <Label>Onboarding Excel File</Label>
-                        <StackPanel Orientation="Horizontal" >
-                            <TextBox Name="FilePath" Height="20" Width="300" IsReadOnly="True"/>
-                            <Button Click="ChooseFile_OnClick" Content="Choose.." MinWidth="90" Margin="5,0,0,0"></Button>
-                            <Button Click="CreateFile_OnClick" Content="Create" MinWidth="90" Margin="5,0,0,0"></Button>
-                        </StackPanel>
-                        <StackPanel Margin="0,15,0,0">
+                        <StackPanel >
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel Margin="5">
                                     <Label>Amazon Email</Label>
@@ -94,7 +89,35 @@
                 
             </TabItem>
             <TabItem Header="Results">
-                
+                <Canvas>
+                    <StackPanel Orientation="Vertical" Width="500">
+                        <StackPanel Orientation="Horizontal" Width="500">
+                            <Button Click="ImportData" Content="Import CSV..." MinWidth="50" HorizontalContentAlignment="Right" Margin="25,0,5,0"/>
+                            <Button Click="ExportData" Content="Export To CSV" MinWidth="50" HorizontalAlignment="Right" Margin="0,0,5,0"/>
+                            
+
+                        </StackPanel>
+                    
+                        <DataGrid Name="ResultsGrid" AutoGenerateColumns="False" 
+                                  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" 
+                                  Margin="15" RowHeight="15" ColumnWidth="SizeToCells" 
+                                  GridLinesVisibility="All" VerticalScrollBarVisibility="Visible"
+                                  CellEditEnding="ResultsGrid_OnCellEditEnding"
+                                  RowEditEnding="ResultsGrid_OnRowEditEnding"
+                                  SelectionChanged="ResultsGrid_OnSelectionChanged">
+                            <DataGrid.Columns>
+                                
+                                <DataGridTextColumn Header="FirstName" Binding="{Binding Path=FirstName}"/>
+                                <DataGridTextColumn Header="LastName" Binding="{Binding Path=LastName}"/>
+                                <DataGridTextColumn Header="Phone" Binding="{Binding Path=Phone}"/>
+                                <DataGridTextColumn Header="Email" Binding="{Binding Path=Email}"/>
+                                <DataGridTextColumn Header="Background" Binding="{Binding Path=Background}"/>
+                                <DataGridTextColumn Header="Drug" Binding="{Binding Path=Drug}"/>
+                                <DataGridCheckBoxColumn Header="Change?" Binding="{Binding Path=Change}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </Canvas>
             </TabItem>
             <TabItem Header="New Candidate">
                 

@@ -56,7 +56,7 @@ namespace OnboardLocal.Controller
                     Search(EmailXpath, person.Email);
                     _wait.Until(driver => driver.FindElement(By.XPath(TBody)));
                 }
-                catch (NoSuchElementException e)
+                catch (NoSuchElementException)
                 {
                     Search(NameXpath, person.Lastname);
                     _wait.Until(driver => driver.FindElement(By.XPath(TBody)));
@@ -69,7 +69,7 @@ namespace OnboardLocal.Controller
                     {
                         return Search(FindEmailFromNames(rows, person));
                     }
-                    catch (ArgumentException e)
+                    catch (ArgumentException)
                     {
                         person.Background = "Not in Cortex";
                     }
@@ -82,7 +82,7 @@ namespace OnboardLocal.Controller
                 _wait.Until(driver => driver.FindElement(By.XPath(ExpanderXpath)));
                 return GatherInfo(person);
             }
-            catch (NoSuchElementException e)
+            catch (NoSuchElementException)
             {
                 
             }
@@ -108,7 +108,7 @@ namespace OnboardLocal.Controller
                 Driver.FindElement(By.XPath("//*[@id=\"ap_password\"]")).SendKeys(_pass);
                 wait.Until(driver => driver.FindElement(By.XPath("//*[@id=\"ap_email\"]")));
             }
-            catch (NoSuchElementException e)
+            catch (NoSuchElementException)
             {
                 return true;
             }
@@ -118,7 +118,7 @@ namespace OnboardLocal.Controller
             {
                 Driver.FindElement(By.XPath(""));
             }
-            catch (NoSuchElementException e)
+            catch (NoSuchElementException)
             {
                 
             }
@@ -160,7 +160,7 @@ namespace OnboardLocal.Controller
                 person.Background = "OFFBOARDED";
                 return person;
             }
-            catch (NoSuchElementException e)
+            catch (NoSuchElementException)
             {
                 Driver.FindElement(By.XPath(ExpanderXpath)).Click();
                 _wait.Until(driver => driver.FindElement(By.XPath(BackgroundXpath)));
