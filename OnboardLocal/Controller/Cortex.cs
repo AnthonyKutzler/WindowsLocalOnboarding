@@ -84,11 +84,8 @@ namespace OnboardLocal.Controller
             }
             catch (NoSuchElementException)
             {
-                
             }
-
-
-            throw new System.NotImplementedException();
+            return person;
         }
 
         private void Search(string field, string value)

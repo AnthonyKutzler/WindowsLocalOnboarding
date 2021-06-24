@@ -17,7 +17,7 @@ namespace OnboardLocal.Controller
         
         public void RunApplication(MainWindow window)
         {
-            //TODO Try/ Catch on View to display error, move away from excel and use application to view results, with sqlite
+            
             var peopleProvider = new PeopleProvider();
             _all = peopleProvider.GetPeople();
             FilterBackgrounds();
@@ -26,7 +26,8 @@ namespace OnboardLocal.Controller
             _all = _all.Concat(UpdatePeople(_filter, new Cortex(window.AmzEmail.Text, window.AmzPassword.Password, driver)));
             FilterDrugScreens(window.DrugScreen);
             //check for drug tests
-            _all = _all.Concat(UpdatePeople(_filter, new Quest(window.QuestUsername.Text, window.QuestPassword.Password, driver)));
+            var quest = new Quest(window.QuestUsername.Text, window.QuestPassword.Password, driver);
+            _all = _all.Concat(UpdatePeople(_filter, quest));
             FilterNewDrugTests(window.DrugScreen);
             //setup new drug tests
             _all = _all.Concat(new Quest(window.QuestUsername.Text, window.QuestPassword.Password, driver).SetupNewTests(_filter));

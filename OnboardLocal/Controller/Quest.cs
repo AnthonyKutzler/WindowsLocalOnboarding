@@ -17,6 +17,7 @@ namespace OnboardLocal.Controller
         private int _loginAttempts;
         private int _nameIndex;
         private int _resultIndex;
+        private List<Person> _newTests = new List<Person>();
 
         private const string NewTestUrl = "https://esp.employersolutions.com/ImportOrder/Index";
         private const string SearchUrl = "https://esp.employersolutions.com/Results/Summary";
@@ -95,7 +96,7 @@ namespace OnboardLocal.Controller
             {
                 using (var writer = new StreamWriter(Csv))
                 {
-                    var line =
+                    const string line =
                         @"Primary ID, First Name, Last Name, Primary Phone, Date of Birth, Account Number, Modality, Client Site Location, Order Code(s), Collection Type, Reason for Test, Order Expiration Date, Order Expiration Time, Collection Site Code, Observed, Email(s)";
                     writer.Write(line);
                     writer.Flush();
@@ -115,7 +116,7 @@ namespace OnboardLocal.Controller
             
             
             
-            //TODO: IMPlement
+            //TODO: Finish Implementing Setup new DT
             
             
             throw new System.NotImplementedException();
