@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LRZvI1a3z5VVQ0pKtirZKCCEQ8AjmsuQl8Ef6jFddp5xYKa9xgOeHqNL2U2TBLhXVzrcW3iCPGU8Rw0DaJA28g==",
+  "dgSpecHash": "2Ad7TZpIXkCPGrbBMUmJkumICAz7jPovQ8tAdQVvyto9iXgZKppXL9WooJ08jUlbGXSWDkzZpDNGaYJKJWe4LA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\gob\\RiderProjects\\OnboardLocal\\Onboarding installer\\Onboarding installer.wapproj",
+  "projectFilePath": "C:\\Users\\gob\\RiderProjects\\WindowsLocalOnboarding\\Onboarding installer\\Onboarding installer.wapproj",
   "expectedPackageFiles": [
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages\\microsoft.windows.sdk.buildtools\\10.0.19041.8\\microsoft.windows.sdk.buildtools.10.0.19041.8.nupkg.sha512"
   ],

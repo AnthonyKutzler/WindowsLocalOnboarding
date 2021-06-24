@@ -28,9 +28,8 @@ namespace OnboardLocal.Controller
             //check for drug tests
             var quest = new Quest(window.QuestUsername.Text, window.QuestPassword.Password, driver);
             _all = _all.Concat(UpdatePeople(_filter, quest));
-            FilterNewDrugTests(window.DrugScreen);
+            quest.SetupNewTests();
             //setup new drug tests
-            _all = _all.Concat(new Quest(window.QuestUsername.Text, window.QuestPassword.Password, driver).SetupNewTests(_filter));
             peopleProvider.UpdatePeople(_all);
             
         }

@@ -14,9 +14,9 @@ namespace OnboardLocal.Controller
             throw new System.NotImplementedException();
         }
 
-        public void CreateCsvFile(IEnumerable<T> list, string path)
+        public void CreateCsvFile(string header, IEnumerable<T> list, string path)
         {
-            var csv = new StringBuilder();
+            var csv = new StringBuilder(header);
             foreach (var item in list)
             {
                 csv.AppendLine(item.ToString());

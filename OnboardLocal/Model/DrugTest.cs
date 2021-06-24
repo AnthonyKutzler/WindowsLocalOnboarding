@@ -1,3 +1,4 @@
+using System;
 using System.Text.RegularExpressions;
 
 namespace OnboardLocal.Model
@@ -5,9 +6,7 @@ namespace OnboardLocal.Model
     public class DrugTest
     {
         public string PrimaryId;
-        public string First;
-        public string Last;
-        public string Phone;
+        public Person Person;
         public string Account;
         public string Blank = "";
         public string OrderCode;
@@ -17,47 +16,27 @@ namespace OnboardLocal.Model
         public string ExpirationTime = "19:00";
         public string CollectionSite;
         public string Observed = "No";
-        public string Email;
 
-        public DrugTest(string first, string last, string phone, string email)
-        {
-            PrimaryId = Regex.Replace(phone, "[^a-zA-Z]+", "");
-            First = Regex.Replace(first, "[^a-zA-Z]+", "");
-            Last = Regex.Replace(last, "[^a-zA-Z]+", "");;
-            Phone = Regex.Replace(phone, "[^a-zA-Z]+", "");
-            Account = Properties.Settings.Default.AccountId;
-            Blank = "";
-            OrderCode = Properties.Settings.Default.OrderCode;
-            Split = "Split";
-            TestReason = "Pre-Employment";
-            ExpirationDate = expirationDate;
-            ExpirationTime = expirationTime;
-            CollectionSite = Properties.Settings.Default.CollectionSite;
-            Observed = "No";
-            Email = email;
-        }
+        
 
         public DrugTest(Person person)
         {
             PrimaryId = Regex.Replace(person.Phone, "[^a-zA-Z]+", "");
-            First = Regex.Replace(person.FirstName, "[^a-zA-Z]+", "");
-            Last = Regex.Replace(person.Lastname, "[^a-zA-Z]+", "");;
-            Phone = Regex.Replace(person.Phone, "[^a-zA-Z]+", "");
+            Person = person;
             Account = Properties.Settings.Default.AccountId;
             Blank = "";
             OrderCode = Properties.Settings.Default.OrderCode;
             Split = "Split";
             TestReason = "Pre-Employment";
-            ExpirationDate = expirationDate;
-            ExpirationTime = expirationTime;
+            ExpirationDate = DateTime.Now.AddDays(14).ToString();
+            ExpirationTime = "19:00";
             CollectionSite = Properties.Settings.Default.CollectionSite;
             Observed = "No";
-            Email = person.Email;
         }
 
         public override string ToString()
         {
-            return $"${}, ${}, ${}, ${}, ${Blank}, ${}, ${Blank}, ${}, ${}, ${}, ${}, ${}, ${}, ${}, ${}";
+            return $"${PrimaryId}, ${Regex.Replace(Person.FirstName, "[^a-zA-Z]+", "")}, ${Regex.Replace(Person.Lastname, "[^a-zA-Z]+", "")}, ${Regex.Replace(Person.Phone, "[^a-zA-Z]+", "")}, ${Blank}, ${Account}, ${Blank}, ${OrderCode}, ${Split}, ${TestReason}, ${ExpirationDate}, ${ExpirationTime}, ${CollectionSite}, ${Observed}, ${Person.Email}";
         }
     }
 }

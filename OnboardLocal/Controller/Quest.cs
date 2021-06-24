@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using OnboardLocal.Model;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
@@ -17,7 +18,7 @@ namespace OnboardLocal.Controller
         private int _loginAttempts;
         private int _nameIndex;
         private int _resultIndex;
-        private List<Person> _newTests = new List<Person>();
+        private List<DrugTest> _newTests = new List<DrugTest>();
 
         private const string NewTestUrl = "https://esp.employersolutions.com/ImportOrder/Index";
         private const string SearchUrl = "https://esp.employersolutions.com/Results/Summary";
@@ -61,9 +62,10 @@ namespace OnboardLocal.Controller
                     oldValue = newValue;
                 }
             }
-            catch (NoSuchElementException e)
+            catch (NoSuchElementException)
             {
                 person.Drug = "";
+                _newTests.Add(new DrugTest(person));
             }
 
             return person;
@@ -82,56 +84,35 @@ namespace OnboardLocal.Controller
                 _wait.Until(driver => driver.FindElement(By.XPath("//*[text()='DASHBOARD'")));
                 return true;
             }
-            catch (NoSuchElementException e)
+            catch (NoSuchElementException)
             {
                 _loginAttempts++;
                 return false;
             }
         }
 
-        public IEnumerable<Person> SetupNewTests(IEnumerable<Person> people)
+        public void SetupNewTests()
         {
-            var oldPeople = (Person[])people;
             try
             {
                 using (var writer = new StreamWriter(Csv))
                 {
                     const string line =
-                        @"Primary ID, First Name, Last Name, Primary Phone, Date of Birth, Account Number, Modality, Client Site Location, Order Code(s), Collection Type, Reason for Test, Order Expiration Date, Order Expiration Time, Collection Site Code, Observed, Email(s)";
-                    writer.Write(line);
-                    writer.Flush();
-                    foreach (var person in (Person[]) people)
-                    {
-                        
-                        //Add to CSV for later import..... need more info from settings.. TODO: Account#, DrugTest Code, Location Code..
-                    }
+                        "Primary ID, First Name, Last Name, Primary Phone, Date of Birth, Account Number, Modality, Client Site Location, Order Code(s), Collection Type, Reason for Test, Order Expiration Date, Order Expiration Time, Collection Site Code, Observed, Email(s)";
+                    new CsvService<DrugTest>().CreateCsvFile(line, _newTests, Csv);
+                    
+                    //TODO Finish Implementing Logic
                 }
-
-                return people;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return oldPeople;
+                // ignored
             }
-            
-            
-            
-            //TODO: Finish Implementing Setup new DT
-            
-            
-            throw new System.NotImplementedException();
-
-
-
-
-            return people;
         }
 
         private static string FormatName(string name)
         {
-            
-            //TODO: IMPlement
-            throw new System.NotImplementedException();
+            return Regex.Replace(name, "[^a-zA-Z]+", "");
         }
 
         private static int ValueFromDrugResult(string result)
