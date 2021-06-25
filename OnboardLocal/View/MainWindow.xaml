@@ -11,40 +11,48 @@
             <TabItem Header="Run Application">
                 <Canvas>
                     <StackPanel Margin="25">
-                        <StackPanel >
+                        <Label>Path to ChromeDriver</Label>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Name="ChromeDriverPath" Height="20" Width="300" IsReadOnly="True" />
+                            <Button Click="ChooseChromedriver" Content="Choose.." MinWidth="65" Margin="5,0,0,0" />
+                            <Button Click="CheckChromedriver" Content="Check" MinWidth="65" Margin="5,0,0,0" />
+                        </StackPanel>
+                        <StackPanel Margin="0,15,0,0">
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel Margin="5">
                                     <Label>Amazon Email</Label>
-                                    <TextBox Name="AmzEmail" Height="20" Width="250"/>
+                                    <TextBox Name="AmzEmail" Height="20" Width="250" />
                                 </StackPanel>
                                 <StackPanel Margin="5">
                                     <Label>Amazon Password</Label>
-                                    <PasswordBox Name="AmzPassword" Height="20" Width="250"/>
+                                    <PasswordBox Name="AmzPassword" Height="20" Width="250" />
                                 </StackPanel>
                             </StackPanel>
-                        
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel Margin="5">
                                     <Label>Quest Login</Label>
-                                    <TextBox Name="QuestUsername" Height="20" Width="250"/>
+                                    <TextBox Name="QuestUsername" Height="20" Width="250" />
                                 </StackPanel>
                                 <StackPanel Margin="5">
                                     <Label>Quest Password</Label>
-                                    <PasswordBox Name="QuestPassword" Height="20" Width="250"/>
+                                    <PasswordBox Name="QuestPassword" Height="20" Width="250" />
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
-                        <Label Content="When to schedule Drug Screening (After Background:" Margin="0, 10,0,0"/>
+                        <Label Content="When to schedule Drug Screening (After Background:" Margin="0, 10,0,0" />
                         <StackPanel Orientation="Horizontal" Margin="0,10,0,9">
-                            <RadioButton x:Name="BgPass" Checked="HandleCheck" Content="Passed"></RadioButton>
-                            <RadioButton x:Name="BgPend" Margin="20,0,0,0" Checked="HandleCheck" Content="Pending"></RadioButton>
-                            <RadioButton x:Name="PreBg" Margin="20,0,0,0" Checked="HandleCheck" Content="Pre-Background"></RadioButton>
-                            
+                            <RadioButton x:Name="BgPass" Checked="HandleCheck" Content="Passed" />
+                            <RadioButton x:Name="BgPend" Margin="20,0,0,0" Checked="HandleCheck" Content="Pending" />
+                            <RadioButton x:Name="PreBg" Margin="20,0,0,0" Checked="HandleCheck"
+                                         Content="Pre-Background" />
+
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,5 ,0">
-                            <Label Name="SuccessCondition" Content="" Margin="0,0, 0, 0" Foreground="Red" Visibility="Hidden"/>
-                        
-                            <Button Click="Run_OnClick" Content="Run" MinWidth="50" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+                            <Label Name="SuccessCondition" Content="" Margin="0,0, 0, 0" Foreground="Red"
+                                   Visibility="Hidden" />
+
+                            <Button Click="Run_OnClick" Content="Run" MinWidth="50" HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom" />
                         </StackPanel>
                     </StackPanel>
                 </Canvas>
@@ -53,75 +61,82 @@
                 <Canvas>
                     <StackPanel Margin="35,15,15,15" Orientation="Horizontal">
                         <StackPanel>
-                            <Label Content="Quest" FontSize="18" FontWeight="Bold"/>
+                            <Label Content="Quest" FontSize="18" FontWeight="Bold" />
                             <StackPanel Orientation="Vertical" Margin="0,0,0,10">
-                                <Label Content="Account Number" HorizontalAlignment="Left"></Label>
-                                <TextBox Name="AccountNumber" Height="20" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                                <Label Content="Account Number" HorizontalAlignment="Left" />
+                                <TextBox Name="AccountNumber" Height="20" Width="100" HorizontalAlignment="Left"
+                                         Margin="5,0,0,0" />
                             </StackPanel>
                             <StackPanel Orientation="Vertical" Margin="0,0,0,10">
-                                <Label Content="Order Code" HorizontalAlignment="Left"></Label>
-                                <TextBox Name="OrderCode" Height="20" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                                <Label Content="Order Code" HorizontalAlignment="Left" />
+                                <TextBox Name="OrderCode" Height="20" Width="100" HorizontalAlignment="Left"
+                                         Margin="5,0,0,0" />
                             </StackPanel>
                             <StackPanel Orientation="Vertical" Margin="0,0,0,10">
-                                <Label Content="Location Code" HorizontalAlignment="Left"></Label>
-                                <TextBox Name="LocationCode" Height="20" Width="100" HorizontalAlignment="Left" Margin="5,0,0,10"/>
+                                <Label Content="Location Code" HorizontalAlignment="Left" />
+                                <TextBox Name="LocationCode" Height="20" Width="100" HorizontalAlignment="Left"
+                                         Margin="5,0,0,10" />
                             </StackPanel>
                         </StackPanel>
                         <StackPanel Margin="25,0,0,0">
-                            <Label Content="Cortex" FontSize="18" FontWeight="Bold"/>
+                            <Label Content="Cortex" FontSize="18" FontWeight="Bold" />
                             <StackPanel Orientation="Vertical" Margin="0,0,0,10">
-                                <Label Content="Station Code" HorizontalAlignment="Left"></Label>
-                                <TextBox Name="StationCode" Height="20" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                                <Label Content="Station Code" HorizontalAlignment="Left" />
+                                <TextBox Name="StationCode" Height="20" Width="100" HorizontalAlignment="Left"
+                                         Margin="5,0,0,0" />
                             </StackPanel>
                             <StackPanel Orientation="Vertical" Margin="0,0,0,10">
-                                <Label Content="Badge ID" HorizontalAlignment="Left"></Label>
-                                <TextBox Name="BadgeId" Height="20" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                                <Label Content="Badge ID" HorizontalAlignment="Left" />
+                                <TextBox Name="BadgeId" Height="20" Width="100" HorizontalAlignment="Left"
+                                         Margin="5,0,0,0" />
                             </StackPanel>
-                            
+
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,5 ,0">
-                            <Label Name="SettingsSaved" Content="Saved √" Margin="0,0, 0, 0" Foreground="LimeGreen" VerticalAlignment="Bottom" Visibility="Hidden"/>
-                            <Button Click="QuestSave_OnClick" Content="Save" MinWidth="50" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                            <Label Name="SettingsSaved" Content="Saved √" Margin="0,0, 0, 0" Foreground="LimeGreen"
+                                   VerticalAlignment="Bottom" Visibility="Hidden" />
+                            <Button Click="QuestSave_OnClick" Content="Save" MinWidth="50" HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom" />
                         </StackPanel>
                     </StackPanel>
-                    
+
                 </Canvas>
-                
+
             </TabItem>
             <TabItem Header="Results">
                 <Canvas>
                     <StackPanel Orientation="Vertical" Width="500">
                         <StackPanel Orientation="Horizontal" Width="500">
-                            <Button Click="ImportData" Content="Import CSV... (NYI)" MinWidth="50" HorizontalContentAlignment="Right" Margin="25,0,5,0"/>
-                            <Button Click="ExportData" Content="Export To CSV (NYI)" MinWidth="50" HorizontalAlignment="Right" Margin="0,0,5,0"/>
-                            
+                            <Button Click="ImportData" Content="Import CSV... (NYI)" MinWidth="50"
+                                    HorizontalContentAlignment="Right" Margin="25,0,5,0" />
+                            <Button Click="ExportData" Content="Export To CSV (NYI)" MinWidth="50"
+                                    HorizontalAlignment="Right" Margin="0,0,5,0" />
+
 
                         </StackPanel>
-                    
-                        <DataGrid Name="ResultsGrid" AutoGenerateColumns="False" 
-                                  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" 
-                                  Margin="15" RowHeight="15" ColumnWidth="SizeToCells" 
+
+                        <DataGrid Name="ResultsGrid" AutoGenerateColumns="False"
+                                  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                  Margin="15" RowHeight="15" ColumnWidth="*"
                                   GridLinesVisibility="All" VerticalScrollBarVisibility="Visible"
                                   CellEditEnding="ResultsGrid_OnCellEditEnding"
                                   RowEditEnding="ResultsGrid_OnRowEditEnding"
                                   SelectionChanged="ResultsGrid_OnSelectionChanged">
                             <DataGrid.Columns>
-                                
-                                <DataGridTextColumn Header="FirstName" Binding="{Binding Path=FirstName}"/>
-                                <DataGridTextColumn Header="LastName" Binding="{Binding Path=LastName}"/>
-                                <DataGridTextColumn Header="Phone" Binding="{Binding Path=Phone}"/>
-                                <DataGridTextColumn Header="Email" Binding="{Binding Path=Email}"/>
-                                <DataGridTextColumn Header="Background" Binding="{Binding Path=Background}"/>
-                                <DataGridTextColumn Header="Drug" Binding="{Binding Path=Drug}"/>
-                                <DataGridCheckBoxColumn Header="Change?" Binding="{Binding Path=Change}"/>
+
+                                <DataGridTextColumn Header="FirstName" Binding="{Binding Path=FirstName}" />
+                                <DataGridTextColumn Header="LastName" Binding="{Binding Path=Lastname}" />
+                                <DataGridTextColumn Header="Phone" Binding="{Binding Path=Phone}" />
+                                <DataGridTextColumn Header="Email" Binding="{Binding Path=Email}" />
+                                <DataGridTextColumn Header="Background" Binding="{Binding Path=Background}" />
+                                <DataGridTextColumn Header="Drug" Binding="{Binding Path=Drug}" />
+                                <DataGridCheckBoxColumn Header="Change?" Binding="{Binding Path=Change}" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </StackPanel>
                 </Canvas>
             </TabItem>
-            <TabItem Header="New Candidate">
-                
-            </TabItem>
+            <TabItem Header="New Candidate" />
         </TabControl>
     </Grid>
 </Window>

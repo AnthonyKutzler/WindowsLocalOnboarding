@@ -21,7 +21,7 @@ namespace OnboardLocal.Controller
             var peopleProvider = new PeopleProvider();
             _all = peopleProvider.GetPeople();
             FilterBackgrounds();
-            var driver = StartDriver();
+            var driver = StartDriver(window.ChromeDriverPath.Text);
             //Check for backgrounds
             _all = _all.Concat(UpdatePeople(_filter, new Cortex(window.AmzEmail.Text, window.AmzPassword.Password, driver)));
             FilterDrugScreens(window.DrugScreen);
@@ -48,7 +48,7 @@ namespace OnboardLocal.Controller
             return people;
         }
 
-        private static IWebDriver StartDriver()
+        private static IWebDriver StartDriver(string path)
         {
             var options = new ChromeOptions();
             options.AddArguments("start-maximized");
@@ -58,8 +58,8 @@ namespace OnboardLocal.Controller
             options.AddArguments("--disable-dev-shm-usage");
             options.AddArguments("--disable-browser-side-navigation");
             options.AddArguments("--disable-gpu");
-            options.AddArgument($@"user-data-dir=${Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}AppData\Local\Google\Chrome\User Data\Default");
-            return new ChromeDriver($@"${System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().CodeBase)}chromedriver.exe",options);
+            //options.AddArgument($@"user-data-dir=${Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}AppData\Local\Google\Chrome\User Data\Default");
+            return new ChromeDriver(path,options);
         }
 
         private void FilterBackgrounds()
@@ -107,7 +107,18 @@ namespace OnboardLocal.Controller
             _all = _all.Where(person => !(person.Background == backgroundText && (person.Drug != "Positive" || person.Drug != "Negative" || person.Drug != "Expired")));
         }
 
-
+        public static void CheckChromeDriver(string path)
+        {
+            try
+            {
+                var driver = StartDriver(path);
+                driver.Close();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Chromedriver of wrong version");
+            }
+        }
         
     }
 }

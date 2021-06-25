@@ -181,7 +181,12 @@ namespace OnboardLocal.Controller
             }
             
         }
-        
+
+        public void NewOnboard(Person person)
+        {
+            
+        }
+
 
     }
 

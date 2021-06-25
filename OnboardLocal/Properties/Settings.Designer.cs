@@ -82,5 +82,41 @@ namespace OnboardLocal.Properties {
                 this["BadgeId"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ChromedriverPath {
+            get {
+                return ((string)(this["ChromedriverPath"]));
+            }
+            set {
+                this["ChromedriverPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AmzEmail {
+            get {
+                return ((string)(this["AmzEmail"]));
+            }
+            set {
+                this["AmzEmail"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string QuestUsername {
+            get {
+                return ((string)(this["QuestUsername"]));
+            }
+            set {
+                this["QuestUsername"] = value;
+            }
+        }
     }
 }

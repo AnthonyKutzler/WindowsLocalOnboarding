@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Microsoft.Win32;
 using OnboardLocal.Controller;
 using OnboardLocal.Model;
 
@@ -27,19 +30,34 @@ namespace OnboardLocal
         public MainWindow()
         {
             InitializeComponent();
-            AccountNumber.Text = Properties.Settings.Default.AccountId;
-            OrderCode.Text = Properties.Settings.Default.OrderCode;
-            LocationCode.Text = Properties.Settings.Default.CollectionSite;
-            BadgeId.Text = Properties.Settings.Default.BadgeId;
-            StationCode.Text = Properties.Settings.Default.StationCode;
-            ResultsGrid.ItemsSource = _provider.GetPeople();
 
+            ChromeDriverPath.Text = Properties.Settings.Default.ChromedriverPath ?? "";
+            AccountNumber.Text = Properties.Settings.Default.AccountId ?? "";
+            OrderCode.Text = Properties.Settings.Default.OrderCode ?? "";
+            LocationCode.Text = Properties.Settings.Default.CollectionSite ?? "";
+            BadgeId.Text = Properties.Settings.Default.BadgeId ?? "";
+            StationCode.Text = Properties.Settings.Default.StationCode ?? "";
+            AmzEmail.Text = Properties.Settings.Default.AmzEmail ?? "";
+            QuestUsername.Text = Properties.Settings.Default.QuestUsername ?? "";
             
+            
+            try
+            {
+                var people = _provider.GetPeople().ToList();
+                if (people.Count > 0)
+                    ResultsGrid.ItemsSource = people;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
         }
         
         
         private void Run_OnClick(object sender, RoutedEventArgs e)
         {
+            Properties.Settings.Default.AmzEmail = AmzEmail.Text;
+            Properties.Settings.Default.QuestUsername = QuestUsername.Text;
             try
             {
                 new OnboardingService().RunApplication(this);
@@ -78,7 +96,7 @@ namespace OnboardLocal
             Properties.Settings.Default.CollectionSite = LocationCode.Text;
             Properties.Settings.Default.BadgeId = BadgeId.Text;
             Properties.Settings.Default.StationCode = StationCode.Text;
-
+            Properties.Settings.Default.Save();
             SettingsSaved.Visibility = Visibility.Visible;
 
         }
@@ -158,6 +176,28 @@ namespace OnboardLocal
         private void ResultsGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             _person = ResultsGrid.SelectedItem as Person;
+        }
+
+        private void ChooseChromedriver(object sender, RoutedEventArgs e)
+        {
+            var fileDialog = new OpenFileDialog();
+            fileDialog.Filter = "Executable (*.exe)|*.exe";
+            if (fileDialog.ShowDialog() != true) return;
+            Properties.Settings.Default.ChromedriverPath = Path.GetDirectoryName(fileDialog.FileName);
+            Properties.Settings.Default.Save();
+            ChromeDriverPath.Text = Properties.Settings.Default.ChromedriverPath;
+        }
+
+        private void CheckChromedriver(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OnboardingService.CheckChromeDriver(ChromeDriverPath.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         
     }

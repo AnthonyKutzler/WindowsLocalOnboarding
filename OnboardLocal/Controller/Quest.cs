@@ -93,21 +93,19 @@ namespace OnboardLocal.Controller
 
         public void SetupNewTests()
         {
+            if (!Login()) return;
             try
             {
-                using (var writer = new StreamWriter(Csv))
-                {
-                    const string line =
-                        "Primary ID, First Name, Last Name, Primary Phone, Date of Birth, Account Number, Modality, Client Site Location, Order Code(s), Collection Type, Reason for Test, Order Expiration Date, Order Expiration Time, Collection Site Code, Observed, Email(s)";
-                    new CsvService<DrugTest>().CreateCsvFile(line, _newTests, Csv);
-                    
+                const string line =
+                    "Primary ID, First Name, Last Name, Primary Phone, Date of Birth, Account Number, Modality, " 
+                    + "Client Site Location, Order Code(s), Collection Type, Reason for Test, Order Expiration Date, " 
+                    + "Order Expiration Time, Collection Site Code, Observed, Email(s)";
+                new CsvService<DrugTest>().CreateCsvFile(line, _newTests, Csv);
+
                     //TODO Finish Implementing Logic
-                }
+                
             }
-            catch (Exception)
-            {
-                // ignored
-            }
+            catch (Exception) { /* ignored*/ }
         }
 
         private static string FormatName(string name)
