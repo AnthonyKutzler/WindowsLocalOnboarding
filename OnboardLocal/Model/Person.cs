@@ -27,6 +27,16 @@ namespace OnboardLocal.Model
             Drug = drug;
             Change = change;
         }
+        
+        public Person(string firstName, string lastname, string phone, string email, string background, string drug)
+        {
+            FirstName = firstName;
+            Lastname = lastname;
+            Phone = phone;
+            Email = email;
+            Background = background;
+            Drug = drug;
+        }
     }
     
     

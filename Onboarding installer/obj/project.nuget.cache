@@ -1,10 +1,22 @@
 {
   "version": 2,
-  "dgSpecHash": "LRZvI1a3z5VVQ0pKtirZKCCEQ8AjmsuQl8Ef6jFddp5xYKa9xgOeHqNL2U2TBLhXVzrcW3iCPGU8Rw0DaJA28g==",
+  "dgSpecHash": "n2ZfPwULOmxEyl/xfysGK+uRYxlHj9zXfuS5o/gLp/naxs+WNwXqi9cIF2kdFF0I07quCs+zBxUmkZZjB0f59w==",
   "success": true,
   "projectFilePath": "C:\\Users\\gob\\RiderProjects\\OnboardLocal\\Onboarding installer\\Onboarding installer.wapproj",
   "expectedPackageFiles": [
+    "C:\\Users\\gob\\.nuget\\packages\\inputsimulator\\1.0.4\\inputsimulator.1.0.4.nupkg.sha512",
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages\\microsoft.windows.sdk.buildtools\\10.0.19041.8\\microsoft.windows.sdk.buildtools.10.0.19041.8.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'InputSimulator 1.0.4' was restored using '.NETCoreApp,Version=v3.1, .NETCoreApp,Version=v3.0, .NETCoreApp,Version=v2.0, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, net5.0-windows10.0.17763, .NETFramework,Version=v4.6.1' instead of the project target framework 'UAP,Version=v10.0.17763'. This package may not be fully compatible with your project.",
+      "libraryId": "InputSimulator",
+      "targetGraphs": [
+        "UAP,Version=v10.0.17763"
+      ]
+    }
+  ]
 }

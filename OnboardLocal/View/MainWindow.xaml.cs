@@ -101,14 +101,7 @@ namespace OnboardLocal
 
         }
 
-        private void ImportData(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void ExportData(object sender, RoutedEventArgs e)
-        {
-        }
+        
 
         private void ResultsGrid_OnRowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
@@ -180,10 +173,7 @@ namespace OnboardLocal
 
         private void ChooseChromedriver(object sender, RoutedEventArgs e)
         {
-            var fileDialog = new OpenFileDialog();
-            fileDialog.Filter = "Executable (*.exe)|*.exe";
-            if (fileDialog.ShowDialog() != true) return;
-            Properties.Settings.Default.ChromedriverPath = Path.GetDirectoryName(fileDialog.FileName);
+            Properties.Settings.Default.ChromedriverPath = Path.GetDirectoryName(ChooseFile("Executable (*.exe)|*.exe"));
             Properties.Settings.Default.Save();
             ChromeDriverPath.Text = Properties.Settings.Default.ChromedriverPath;
         }
@@ -198,6 +188,29 @@ namespace OnboardLocal
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private static string ChooseFile(string filter)
+        {
+            var fileDialog = new OpenFileDialog {Filter = filter};
+            return fileDialog.ShowDialog() == true ? fileDialog.FileName : "";
+        }
+        
+        private void ImportData(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                new CsvService<Person>().ImportPeople(ChooseFile("Comma-separated values (*.csv)|*.csv"));
+            }
+            catch (FileNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void ExportData(object sender, RoutedEventArgs e)
+        {
+            new CsvService<Person>().ExportPeople(ChooseFile("Comma-separated values (*.csv)|*.csv"), new PeopleProvider().GetPeople());
         }
         
     }

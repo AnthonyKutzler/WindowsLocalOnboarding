@@ -43,6 +43,14 @@ namespace OnboardLocal.Controller
             }
         }
 
+        public void InsertPeople(IEnumerable<Person> people)
+        {
+            foreach (var person in people)
+            {
+                InsertPerson(person);
+            }
+        }
+
         public void InsertPerson(Person person)
         {
             const string insert =

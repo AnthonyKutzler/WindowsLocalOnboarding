@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     "UAP,Version=v10.0.17763": {
+      "InputSimulator/1.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/net20/WindowsInput.dll": {}
+        },
+        "runtime": {
+          "lib/net20/WindowsInput.dll": {}
+        }
+      },
       "Microsoft.Windows.SDK.BuildTools/10.0.19041.8": {
         "type": "package",
         "build": {
@@ -20,6 +29,15 @@
       }
     },
     "UAP,Version=v10.0.17763/win10-arm": {
+      "InputSimulator/1.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/net20/WindowsInput.dll": {}
+        },
+        "runtime": {
+          "lib/net20/WindowsInput.dll": {}
+        }
+      },
       "Microsoft.Windows.SDK.BuildTools/10.0.19041.8": {
         "type": "package",
         "build": {
@@ -38,6 +56,15 @@
       }
     },
     "UAP,Version=v10.0.17763/win10-arm-aot": {
+      "InputSimulator/1.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/net20/WindowsInput.dll": {}
+        },
+        "runtime": {
+          "lib/net20/WindowsInput.dll": {}
+        }
+      },
       "Microsoft.Windows.SDK.BuildTools/10.0.19041.8": {
         "type": "package",
         "build": {
@@ -56,6 +83,15 @@
       }
     },
     "UAP,Version=v10.0.17763/win10-arm64-aot": {
+      "InputSimulator/1.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/net20/WindowsInput.dll": {}
+        },
+        "runtime": {
+          "lib/net20/WindowsInput.dll": {}
+        }
+      },
       "Microsoft.Windows.SDK.BuildTools/10.0.19041.8": {
         "type": "package",
         "build": {
@@ -74,6 +110,15 @@
       }
     },
     "UAP,Version=v10.0.17763/win10-x64": {
+      "InputSimulator/1.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/net20/WindowsInput.dll": {}
+        },
+        "runtime": {
+          "lib/net20/WindowsInput.dll": {}
+        }
+      },
       "Microsoft.Windows.SDK.BuildTools/10.0.19041.8": {
         "type": "package",
         "build": {
@@ -92,6 +137,15 @@
       }
     },
     "UAP,Version=v10.0.17763/win10-x64-aot": {
+      "InputSimulator/1.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/net20/WindowsInput.dll": {}
+        },
+        "runtime": {
+          "lib/net20/WindowsInput.dll": {}
+        }
+      },
       "Microsoft.Windows.SDK.BuildTools/10.0.19041.8": {
         "type": "package",
         "build": {
@@ -110,6 +164,15 @@
       }
     },
     "UAP,Version=v10.0.17763/win10-x86": {
+      "InputSimulator/1.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/net20/WindowsInput.dll": {}
+        },
+        "runtime": {
+          "lib/net20/WindowsInput.dll": {}
+        }
+      },
       "Microsoft.Windows.SDK.BuildTools/10.0.19041.8": {
         "type": "package",
         "build": {
@@ -128,6 +191,15 @@
       }
     },
     "UAP,Version=v10.0.17763/win10-x86-aot": {
+      "InputSimulator/1.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/net20/WindowsInput.dll": {}
+        },
+        "runtime": {
+          "lib/net20/WindowsInput.dll": {}
+        }
+      },
       "Microsoft.Windows.SDK.BuildTools/10.0.19041.8": {
         "type": "package",
         "build": {
@@ -147,6 +219,19 @@
     }
   },
   "libraries": {
+    "InputSimulator/1.0.4": {
+      "sha512": "D0LvRCPQMX6/FJHBjng+RO+wRDuHTJrfo7IAc7rmkPvRqchdVGJWg3y70peOtDy3OLNK+HSOwVkH4GiuLnkKgA==",
+      "type": "package",
+      "path": "inputsimulator/1.0.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "inputsimulator.1.0.4.nupkg.sha512",
+        "inputsimulator.nuspec",
+        "lib/net20/WindowsInput.dll",
+        "lib/net20/WindowsInput.xml"
+      ]
+    },
     "Microsoft.Windows.SDK.BuildTools/10.0.19041.8": {
       "sha512": "Av61+xILzjaVU35qLdnfWIGqc9kYC5Uirn2b71dRwh+VrQRo5GRNI+O8RyJXBoovIdLjBQPGjaZky6Ij9G8txg==",
       "type": "package",
@@ -278,6 +363,7 @@
   },
   "projectFileDependencyGroups": {
     "UAP,Version=v10.0.17763": [
+      "InputSimulator >= 1.0.4",
       "Microsoft.Windows.SDK.BuildTools >= 10.0.19041.8",
       "OnboardLocal >= 1.0.0"
     ]
@@ -327,6 +413,10 @@
     "frameworks": {
       "uap10.0.17763": {
         "dependencies": {
+          "InputSimulator": {
+            "target": "Package",
+            "version": "[1.0.4, )"
+          },
           "Microsoft.Windows.SDK.BuildTools": {
             "suppressParent": "All",
             "target": "Package",
@@ -372,5 +462,17 @@
         "#import": []
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'InputSimulator 1.0.4' was restored using '.NETCoreApp,Version=v3.1, .NETCoreApp,Version=v3.0, .NETCoreApp,Version=v2.0, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, net5.0-windows10.0.17763, .NETFramework,Version=v4.6.1' instead of the project target framework 'UAP,Version=v10.0.17763'. This package may not be fully compatible with your project.",
+      "libraryId": "InputSimulator",
+      "targetGraphs": [
+        "UAP,Version=v10.0.17763"
+      ]
+    }
+  ]
 }

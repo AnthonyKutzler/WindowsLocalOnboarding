@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
+using WindowsInput;
+using WindowsInput.Native;
 using OnboardLocal.Model;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
@@ -22,6 +24,8 @@ namespace OnboardLocal.Controller
         private const string ExpanderXpath = "//*[text()='Onboarding']";
         
         //TODO: Test this
+        private const string AssociateXpath = "//*[text()='Associate Settings']/../[text()='Edit']";
+        private const string DrugTestXpath = "//*[text()='Drug Test']/../[text()='Edit']";
         private const string BackgroundXpath = "//*[text()='Background Check']/../..";
         
 
@@ -71,7 +75,9 @@ namespace OnboardLocal.Controller
                     }
                     catch (ArgumentException)
                     {
-                        person.Background = "Not in Cortex";
+                        NewOnboard(person);
+                        person.Background = "";
+                        
                     }
                     return person;
                 }
@@ -173,18 +179,42 @@ namespace OnboardLocal.Controller
                     if (Driver.FindElement(By.XPath("//*[text()='Associate Settings']/../..")).GetAttribute("class")
                         .Contains("complete"))
                         person.Background = "Not Started";
-                    else
-                        person.Background = "Associate Settings Not Complete";
+                    else 
+                        UpdateAssociateSettings();
                 }
-
                 return person;
             }
-            
         }
 
         public void NewOnboard(Person person)
         {
             
+            //TODO
+            _wait.Until(driver => driver.FindElement(By.XPath(ExpanderXpath)));
+            Driver.FindElement(By.XPath(ExpanderXpath)).Click();
+            
+
+        }
+
+        private void UpdateAssociateSettings()
+        {
+            var inputSim = new InputSimulator();
+            Driver.FindElement(By.XPath(AssociateXpath)).Click();
+            Driver.FindElement(By.XPath("//*[@id=\"dsp-onboarding\"]/div/main/div/span[3]/div/div/div[2]/div[1]/div/div/span")).Click();
+            inputSim.Keyboard.TextEntry(Properties.Settings.Default.StationCode);
+            inputSim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
+            Driver.FindElement(By.XPath("//*[@id=\"dsp-onboarding\"]/div/main/div/span[3]/div/div/div[2]/div[2]/div/div")).Click();
+            inputSim.Keyboard.TextEntry("Amazon Logistics");
+            inputSim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
+            Driver.FindElement(By.XPath("//*[@id=\"supervisor-alias\"]")).SendKeys(Properties.Settings.Default.BadgeId);
+            Driver.FindElement(By.XPath("//*[text()='Confirm']"));
+        }
+
+        private void UpdateDrugTest()
+        {
+            //TODO
+            
+            //*[@id="manual-task-yes"]
         }
 
 

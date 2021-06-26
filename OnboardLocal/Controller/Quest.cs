@@ -102,8 +102,14 @@ namespace OnboardLocal.Controller
                     + "Order Expiration Time, Collection Site Code, Observed, Email(s)";
                 new CsvService<DrugTest>().CreateCsvFile(line, _newTests, Csv);
 
-                    //TODO Finish Implementing Logic
-                
+                if (!Login()) return;
+                Driver.Url = NewTestUrl;
+                Driver.FindElement(By.XPath("/html/body/div[2]/div[2]/div[2]/div[1]/div[3]/form/div[2]/div[1]/div/input[2]"));
+                Driver.FindElement(By.XPath("//*[@id=\"ImportFileName\"]")).SendKeys(Csv);
+                Driver.FindElement(By.XPath("//*[@id=\"ui-id-4\"]/input[2]")).Click();
+                Driver.FindElement(By.XPath("//*[text()='NEXT']")).Click();
+                Driver.FindElement(By.XPath("//*[text()='IMPORT']")).Click();
+
             }
             catch (Exception) { /* ignored*/ }
         }

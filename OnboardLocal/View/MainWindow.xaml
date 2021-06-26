@@ -107,9 +107,9 @@
                 <Canvas>
                     <StackPanel Orientation="Vertical" Width="500">
                         <StackPanel Orientation="Horizontal" Width="500">
-                            <Button Click="ImportData" Content="Import CSV... (NYI)" MinWidth="50"
+                            <Button Click="ImportData" Content="Import CSV..." MinWidth="50"
                                     HorizontalContentAlignment="Right" Margin="25,0,5,0" />
-                            <Button Click="ExportData" Content="Export To CSV (NYI)" MinWidth="50"
+                            <Button Click="ExportData" Content="Export To CSV" MinWidth="50"
                                     HorizontalAlignment="Right" Margin="0,0,5,0" />
 
 
@@ -136,7 +136,12 @@
                     </StackPanel>
                 </Canvas>
             </TabItem>
-            <TabItem Header="New Candidate" />
+            <TabItem Header="New Candidate">
+                
+                
+                
+                
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>
