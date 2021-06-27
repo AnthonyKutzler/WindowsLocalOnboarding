@@ -65,3 +65,5 @@ C:\Users\gob\RiderProjects\WindowsLocalOnboarding\OnboardLocal\obj\Debug\Onboard
 C:\Users\gob\RiderProjects\WindowsLocalOnboarding\OnboardLocal\obj\Debug\OnboardLocal.csproj.CopyComplete
 C:\Users\gob\RiderProjects\WindowsLocalOnboarding\OnboardLocal\obj\Debug\OnboardLocal.exe
 C:\Users\gob\RiderProjects\WindowsLocalOnboarding\OnboardLocal\obj\Debug\OnboardLocal.pdb
+C:\Users\gob\RiderProjects\OnboardLocal\OnboardLocal\bin\Debug\WindowsInput.dll
+C:\Users\gob\RiderProjects\OnboardLocal\OnboardLocal\bin\Debug\WindowsInput.xml

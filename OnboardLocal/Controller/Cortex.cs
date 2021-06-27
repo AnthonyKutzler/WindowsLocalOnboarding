@@ -188,11 +188,17 @@ namespace OnboardLocal.Controller
 
         public void NewOnboard(Person person)
         {
-            
-            //TODO
+            Driver.Url = Url;
+            _wait.Until(driver => driver.FindElement(By.XPath(TBody)));
+            Driver.FindElement(By.XPath("//*[text()='Add a Delivery Associate']")).Click();
+            _wait.Until(driver => driver.FindElement(By.XPath("//*[text()='Send']")));
+            Driver.FindElement(By.XPath("//*[@id=\"root_FIRST_NAME\"]")).SendKeys(person.FirstName);
+            Driver.FindElement(By.XPath("//*[@id=\"root_LAST_NAME\"]")).SendKeys(person.Lastname);
+            Driver.FindElement(By.XPath("//*[@id=\"root_EMAIL\"]")).SendKeys(person.Email);
+            Driver.FindElement(By.XPath("//*[text()='Send']")).Click();
             _wait.Until(driver => driver.FindElement(By.XPath(ExpanderXpath)));
             Driver.FindElement(By.XPath(ExpanderXpath)).Click();
-            
+            UpdateAssociateSettings();
 
         }
 

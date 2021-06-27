@@ -10,7 +10,7 @@ namespace OnboardLocal.Controller
 {
     public class PeopleProvider
     {
-        static string path = Path.Combine(Environment.CurrentDirectory, "data") + @"/onboard.db";
+        static string path = Path.Combine(Environment.CurrentDirectory, "data") + @"\onboard.db";
 
 
         static PeopleProvider()
@@ -19,7 +19,11 @@ namespace OnboardLocal.Controller
 
         private static SQLiteConnection CreateConn()
         {
-            var conn = new SQLiteConnection($"Data Source= ${path};Version=3;");
+            var conn = new SQLiteConnection($"Data Source= {path};Version=3;");
+            if (!Directory.Exists(Path.Combine(Environment.CurrentDirectory, "data")))
+                Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, "data"));
+            if (!File.Exists(path))
+                File.Create(path);
             try
             {
                 conn.Open();
@@ -54,7 +58,9 @@ namespace OnboardLocal.Controller
         public void InsertPerson(Person person)
         {
             const string insert =
-                "INSERT INTO onboarding(first, last, phone, email, background, drug, change) VALUES(@fisrt, @last, @phone, @email, @background, @drug, 0)";
+                "INSERT INTO onboarding(first, last, phone, email, background, drug, change) VALUES(@first, @last, @phone, @email, @background, @drug, 0)";
+            
+            
             var args = new Dictionary<string, object>()
             {
                 {"@first", person.FirstName},
@@ -62,16 +68,15 @@ namespace OnboardLocal.Controller
                 {"@phone", person.Phone},
                 {"@email", person.Email},
                 {"@background", person.Background},
-                {"@drug", person.Drug},
-                {"@change", person.Change}
+                {"@drug", person.Drug}
             };
             ExecuteWrite(insert, args);
         }
 
-        private void UpdatePerson(Person person)
+        public void UpdatePerson(Person person)
         {
             const string update =
-                "UPDATE onboarding SET first = @fisrt, last = @last, phone = @phone, email = @email, background = @background, drug = @drug, change = @change WHERE pk = @pk";
+                "UPDATE onboarding SET first = @first, last = @last, phone = @phone, email = @email, background = @background, drug = @drug, change = @change WHERE pk = @pk";
             var args = new Dictionary<string, object>()
             {
                 {"@pk", person.Pk},
@@ -121,12 +126,14 @@ namespace OnboardLocal.Controller
         {
             var conn = CreateConn();
             {
-                using (var sqliteCmd = new SQLiteCommand(query, conn))
+                using (var sqliteCmd = new SQLiteCommand(conn))
                 {
+                    sqliteCmd.CommandText = query;
                     foreach (var pair in args)
                     {
                         sqliteCmd.Parameters.AddWithValue(pair.Key, pair.Value);
                     }
+                    sqliteCmd.Prepare();
                     sqliteCmd.ExecuteNonQuery();
                 }
             }

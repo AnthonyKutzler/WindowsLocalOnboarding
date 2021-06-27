@@ -17,10 +17,17 @@ namespace OnboardLocal.Controller
             if (File.Exists(pathToFile))
             {
                 var reader = new StreamReader(File.OpenRead(pathToFile));
+                reader.ReadLine();
                 while (!reader.EndOfStream)
                 {
                     var val = reader.ReadLine().Split(',');
-                    people.Add(new Person(val[0],val[1],val[2],val[3],val[4],val[5]));
+                    var background = "";
+                    var drug = "";
+                    if (val.Length > 4)
+                        background = val[4];
+                    if (val.Length > 5)
+                        drug = val[5];
+                    people.Add(new Person(val[0],val[1],val[2],val[3], background, drug));
                 }
                 new PeopleProvider().InsertPeople(people);
             }

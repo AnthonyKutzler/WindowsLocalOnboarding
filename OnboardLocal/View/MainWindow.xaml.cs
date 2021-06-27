@@ -25,7 +25,7 @@ namespace OnboardLocal
 
         private readonly PeopleProvider _provider = new PeopleProvider();
         private Person _person;
-        
+        private bool _newPerson = false;
         public int DrugScreen = 0;
         public MainWindow()
         {
@@ -43,7 +43,7 @@ namespace OnboardLocal
             
             try
             {
-                var people = _provider.GetPeople().ToList();
+                var people = new PeopleService().GetPeopleSorted().ToList();
                 if (people.Count > 0)
                     ResultsGrid.ItemsSource = people;
             }
@@ -107,10 +107,10 @@ namespace OnboardLocal
         {
             try
             {
-                var result = MessageBox.Show("Do you want to Create this new entry", "Confirm", MessageBoxButton.YesNo);
+                var result = MessageBox.Show("Do you want to Update this new entry", "Confirm", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
-                    _provider.InsertPerson(_person);
+                    _provider.UpdatePerson(_person);
                 }
             }
             catch (Exception ex)
@@ -169,6 +169,7 @@ namespace OnboardLocal
         private void ResultsGrid_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             _person = ResultsGrid.SelectedItem as Person;
+            _newPerson = _person == null;
         }
 
         private void ChooseChromedriver(object sender, RoutedEventArgs e)
@@ -183,6 +184,7 @@ namespace OnboardLocal
             try
             {
                 OnboardingService.CheckChromeDriver(ChromeDriverPath.Text);
+                DriverWorks.Visibility = Visibility.Visible;
             }
             catch (Exception ex)
             {
@@ -200,7 +202,7 @@ namespace OnboardLocal
         {
             try
             {
-                new CsvService<Person>().ImportPeople(ChooseFile("Comma-separated values (*.csv)|*.csv"));
+                new CsvService<Person>().ImportPeople(ChooseFile("CSV (*.csv)|*.csv|All Files (*.*)|*.*"));
             }
             catch (FileNotFoundException ex)
             {
@@ -210,7 +212,7 @@ namespace OnboardLocal
 
         private void ExportData(object sender, RoutedEventArgs e)
         {
-            new CsvService<Person>().ExportPeople(ChooseFile("Comma-separated values (*.csv)|*.csv"), new PeopleProvider().GetPeople());
+            new CsvService<Person>().ExportPeople(ChooseFile("Comma-separated values (*.csv)|*.csv|All Files (*.*)|*.*"), new PeopleProvider().GetPeople());
         }
         
     }

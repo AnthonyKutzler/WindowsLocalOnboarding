@@ -103,6 +103,7 @@
     <Compile Include="Controller\Interface\IWebService.cs" />
     <Compile Include="Controller\OnboardingService.cs" />
     <Compile Include="Controller\PeopleProvider.cs" />
+    <Compile Include="Controller\PeopleService.cs" />
     <Compile Include="Controller\Quest.cs" />
     <Compile Include="Model\DrugTest.cs" />
     <Compile Include="Model\Person.cs" />

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OnboardLocal"
         xmlns:model="clr-namespace:OnboardLocal.Model"
-        mc:Ignorable="d" Title="Onboard" Height="350" Width="605">
+        mc:Ignorable="d" Title="Onboard" Height="400" Width="605">
     <Grid>
         <TabControl>
             <TabItem Header="Run Application">
@@ -16,6 +16,8 @@
                             <TextBox Name="ChromeDriverPath" Height="20" Width="300" IsReadOnly="True" />
                             <Button Click="ChooseChromedriver" Content="Choose.." MinWidth="65" Margin="5,0,0,0" />
                             <Button Click="CheckChromedriver" Content="Check" MinWidth="65" Margin="5,0,0,0" />
+                            <Label Name="DriverWorks" Content="Working √" Margin="5,0, 0, 0" Foreground="LimeGreen"
+                                   VerticalAlignment="Bottom" Visibility="Hidden" />
                         </StackPanel>
                         <StackPanel Margin="0,15,0,0">
                             <StackPanel Orientation="Horizontal">
@@ -105,7 +107,7 @@
             </TabItem>
             <TabItem Header="Results">
                 <Canvas>
-                    <StackPanel Orientation="Vertical" Width="500">
+                    <StackPanel Orientation="Vertical" Width="Auto">
                         <StackPanel Orientation="Horizontal" Width="500">
                             <Button Click="ImportData" Content="Import CSV..." MinWidth="50"
                                     HorizontalContentAlignment="Right" Margin="25,0,5,0" />
@@ -115,9 +117,9 @@
 
                         </StackPanel>
 
-                        <DataGrid Name="ResultsGrid" AutoGenerateColumns="False"
+                        <DataGrid Name="ResultsGrid" Height="250" AutoGenerateColumns="False"
                                   HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                                  Margin="15" RowHeight="15" ColumnWidth="*"
+                                  Margin="15,5,15,15" RowHeight="25" ColumnWidth="SizeToCells"
                                   GridLinesVisibility="All" VerticalScrollBarVisibility="Visible"
                                   CellEditEnding="ResultsGrid_OnCellEditEnding"
                                   RowEditEnding="ResultsGrid_OnRowEditEnding"
