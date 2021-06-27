@@ -256,3 +256,4 @@ C:\Users\gob\RiderProjects\WindowsLocalOnboarding\TestProject1\obj\Debug\net5.0\
 C:\Users\gob\RiderProjects\WindowsLocalOnboarding\TestProject1\obj\Debug\net5.0\ref\TestProject1.dll
 C:\Users\gob\RiderProjects\WindowsLocalOnboarding\TestProject1\obj\Debug\net5.0\TestProject1.pdb
 C:\Users\gob\RiderProjects\WindowsLocalOnboarding\TestProject1\obj\Debug\net5.0\TestProject1.genruntimeconfig.cache
+C:\Users\gob\RiderProjects\WindowsLocalOnboarding\TestProject1\bin\Debug\net5.0\WindowsInput.dll

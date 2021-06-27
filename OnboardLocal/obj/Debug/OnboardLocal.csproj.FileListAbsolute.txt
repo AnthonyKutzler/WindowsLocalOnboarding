@@ -67,3 +67,5 @@ C:\Users\gob\RiderProjects\WindowsLocalOnboarding\OnboardLocal\obj\Debug\Onboard
 C:\Users\gob\RiderProjects\WindowsLocalOnboarding\OnboardLocal\obj\Debug\OnboardLocal.pdb
 C:\Users\gob\RiderProjects\OnboardLocal\OnboardLocal\bin\Debug\WindowsInput.dll
 C:\Users\gob\RiderProjects\OnboardLocal\OnboardLocal\bin\Debug\WindowsInput.xml
+C:\Users\gob\RiderProjects\WindowsLocalOnboarding\OnboardLocal\bin\Debug\WindowsInput.dll
+C:\Users\gob\RiderProjects\WindowsLocalOnboarding\OnboardLocal\bin\Debug\WindowsInput.xml

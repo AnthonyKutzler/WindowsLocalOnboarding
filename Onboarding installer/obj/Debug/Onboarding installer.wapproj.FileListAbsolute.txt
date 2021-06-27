@@ -37,3 +37,5 @@ C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\obj\Debug\ProjectAr
 C:\Users\gob\RiderProjects\OnboardLocal\Onboarding installer\obj\Debug\Onboarding installer.wapproj.LastBuild.txt
 C:\Users\gob\RiderProjects\WindowsLocalOnboarding\Onboarding installer\obj\Debug\Onboarding installer.wapproj.AssemblyReference.cache
 C:\Users\gob\RiderProjects\WindowsLocalOnboarding\Onboarding installer\obj\Debug\Onboarding installer.wapproj.CoreCompileInputs.cache
+C:\Users\gob\RiderProjects\WindowsLocalOnboarding\Onboarding installer\bin\AnyCPU\Debug\WindowsInput.dll
+C:\Users\gob\RiderProjects\WindowsLocalOnboarding\Onboarding installer\obj\Debug\Onboarding installer.wapproj.CopyComplete
