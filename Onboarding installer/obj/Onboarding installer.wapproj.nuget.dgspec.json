@@ -44,6 +44,10 @@
       "frameworks": {
         "uap10.0.17763": {
           "dependencies": {
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[27.1.1, )"
+            },
             "InputSimulator": {
               "target": "Package",
               "version": "[1.0.4, )"

@@ -214,7 +214,12 @@ namespace OnboardLocal
         {
             new CsvService<Person>().ExportPeople(ChooseFile("Comma-separated values (*.csv)|*.csv|All Files (*.*)|*.*"), new PeopleProvider().GetPeople());
         }
-        
+
+        private void NewOnboard_OnClick(object sender, RoutedEventArgs e)
+        {
+            new OnboardingService().NewOnboard(this);
+            
+        }
     }
 
     

@@ -10,19 +10,23 @@ namespace OnboardLocal.Controller
 
         public IEnumerable<Person> GetPeopleSorted()
         {
-            var people = new PeopleProvider().GetPeople();
-            //x = people filter BG="Passed"
-            //y = opposite of ^^
-            //z = x filter DT = "Expired" || "Pos"
-            //x = Opposite of ^^
-            //x.Sort
-            //z.Sort
-            //y.SortReverse
-            
-            //people = x+z+y
-            //return people;
-            
-            return people.OrderBy(x => x.Background).ThenBy(x => x.Drug).ThenBy(x => x.Lastname);
+            var people = new PeopleProvider().GetPeople().ToList();
+            var a = people.Where(x => x.Background == "Passed").ToList();
+            var b = people.Where(x => x.Background != "Passed").ToList();
+            var c = a.Where(x => x.Drug == "Expired" || x.Drug == "Positive").ToList();
+            var d = b.Where(x => x.Drug == "Expired" || x.Drug == "Positive").ToList();
+            b = b.Where(x => x.Drug != "Expired" && x.Drug != "Positive").ToList();
+            a = a.Where(x => x.Drug != "Expired" && x.Drug != "Positive").ToList();
+            a = a.OrderBy(x => x.Drug).ToList();
+            c = c.OrderBy(x => x.Drug).ToList();
+            b = b.OrderByDescending(x => x.Background).ToList();
+            d = d.OrderBy(x => x.Drug).ToList();
+            people.Clear();
+            people.AddRange(a);
+            people.AddRange(c);
+            people.AddRange(b);
+            people.AddRange(d);
+            return people;
         }
     }
 }

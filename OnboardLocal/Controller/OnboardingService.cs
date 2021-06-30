@@ -31,21 +31,36 @@ namespace OnboardLocal.Controller
             quest.SetupNewTests();
             //setup new drug tests
             peopleProvider.UpdatePeople(_all);
-            
+            driver.Close();
+        }
+
+        public void NewOnboard(MainWindow window)
+        {
+            var driver = StartDriver(Properties.Settings.Default.ChromedriverPath);
+            try
+            {
+                var person = new Person(window.First.Text, window.Last.Text, window.Phone.Text, window.Email.Text, "", "");
+                new Cortex(window.NewAmzEmail.Text, window.NewAmzPassword.Password, driver).NewOnboard(person);
+                driver.Close();
+                new PeopleProvider().InsertPerson(person);
+            }
+            catch (Exception e)
+            {
+                driver.Close();
+            }
         }
 
         private static IEnumerable<Person> UpdatePeople(IEnumerable<Person> people, IWebService service)
         {
-            while (service.Login())
+            var people1 = people.ToArray();
+            if (!service.Login()) return people1;
+            for (var i = 0; i < people1.Length; i++)
             {
-                var people1 = (Person[]) people;
-                for (var i = 0; i < people1.Length; i++)
-                {
-                    service.Setup();
-                    people1[i] = service.Search(people1[i]);
-                }
+                service.Setup();
+                people1[i] = service.Search(people1[i]);
             }
-            return people;
+
+            return people1;
         }
 
         private static IWebDriver StartDriver(string path)

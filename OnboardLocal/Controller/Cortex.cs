@@ -26,7 +26,7 @@ namespace OnboardLocal.Controller
         //TODO: Test this
         private const string AssociateXpath = "//*[text()='Associate Settings']/../[text()='Edit']";
         private const string DrugTestXpath = "//*[text()='Drug Test']/../[text()='Edit']";
-        private const string BackgroundXpath = "//*[text()='Background Check']/../..";
+        private const string BackgroundXpath = "//*[text()='Background Check']/..";
         
 
         private const string Url =
@@ -66,7 +66,7 @@ namespace OnboardLocal.Controller
                     _wait.Until(driver => driver.FindElement(By.XPath(TBody)));
                 }
 
-                var rows = Driver.FindElements(By.XPath($"${TBody}/*"));
+                var rows = Driver.FindElements(By.XPath($"{TBody}/*"));
                 if (rows.Count > 1)
                 {
                     try
@@ -77,9 +77,9 @@ namespace OnboardLocal.Controller
                     {
                         NewOnboard(person);
                         person.Background = "";
-                        
+                        return person;
                     }
-                    return person;
+                    //return person;
                 }
                 //else click the first name
                 rows[0].FindElement(By.XPath("./td[1]/a")).Click();
@@ -109,7 +109,12 @@ namespace OnboardLocal.Controller
                 wait.Until(driver => driver.FindElement(By.XPath("//*[@id=\"ap_email\"]")));
                 Driver.FindElement(By.XPath("//*[@id=\"ap_email\"]")).SendKeys(_user);
                 Driver.FindElement(By.XPath("//*[@id=\"ap_password\"]")).SendKeys(_pass);
+                Driver.FindElement(By.XPath("//*[@id=\"signInSubmit\"]")).Click();
                 wait.Until(driver => driver.FindElement(By.XPath("//*[@id=\"ap_email\"]")));
+            }
+            catch (WebDriverTimeoutException)
+            {
+                return true;
             }
             catch (NoSuchElementException)
             {
@@ -117,7 +122,7 @@ namespace OnboardLocal.Controller
             }
 
             //Look for Captcha, if found notify event handler of captcha issues.
-            try
+            /*try
             {
                 Driver.FindElement(By.XPath(""));
             }
@@ -125,7 +130,7 @@ namespace OnboardLocal.Controller
             {
                 
             }
-
+*/
             _loginAttempts++;
             return false;
             //throw new System.NotImplementedException();
@@ -167,6 +172,8 @@ namespace OnboardLocal.Controller
             {
                 Driver.FindElement(By.XPath(ExpanderXpath)).Click();
                 _wait.Until(driver => driver.FindElement(By.XPath(BackgroundXpath)));
+                var phone = Driver.FindElement(By.XPath("\\*[text()='Mobile']/../span")).Text;
+                person.Phone = phone.Contains("not") ? "" : phone;
                 var classes = Driver.FindElement(By.XPath(BackgroundXpath)).GetAttribute("class");
                 if (classes.Contains("completed"))
                     person.Background = "Passed";
@@ -188,6 +195,7 @@ namespace OnboardLocal.Controller
 
         public void NewOnboard(Person person)
         {
+            Login();
             Driver.Url = Url;
             _wait.Until(driver => driver.FindElement(By.XPath(TBody)));
             Driver.FindElement(By.XPath("//*[text()='Add a Delivery Associate']")).Click();
@@ -205,7 +213,9 @@ namespace OnboardLocal.Controller
         private void UpdateAssociateSettings()
         {
             var inputSim = new InputSimulator();
-            Driver.FindElement(By.XPath(AssociateXpath)).Click();
+            var ele = Driver.FindElement(By.XPath("//*[text()='Drug Test']/.."));
+            ele.FindElement(By.XPath("./[text()='Edit']")).Click();
+            //Driver.FindElement(By.XPath(AssociateXpath)).Click();
             Driver.FindElement(By.XPath("//*[@id=\"dsp-onboarding\"]/div/main/div/span[3]/div/div/div[2]/div[1]/div/div/span")).Click();
             inputSim.Keyboard.TextEntry(Properties.Settings.Default.StationCode);
             inputSim.Keyboard.KeyPress(VirtualKeyCode.RETURN);

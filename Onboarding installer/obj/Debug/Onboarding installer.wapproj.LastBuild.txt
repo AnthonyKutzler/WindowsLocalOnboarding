@@ -13,6 +13,7 @@ C:\Users\gob\RiderProjects\OnboardLocal\packages\Stub.System.Data.SQLite.Core.Ne
 C:\Users\gob\RiderProjects\OnboardLocal\packages\System.Data.SQLite.EF6.1.0.114.0\lib\net46\System.Data.SQLite.EF6.dll
 C:\Users\gob\RiderProjects\OnboardLocal\packages\System.Data.SQLite.Linq.1.0.114.0\lib\net46\System.Data.SQLite.Linq.dll
 C:\Users\gob\RiderProjects\OnboardLocal\packages\Selenium.WebDriver.4.0.0-beta2\lib\net48\WebDriver.dll
+C:\Users\gob\RiderProjects\OnboardLocal\packages\InputSimulator.1.0.4.0\lib\net20\WindowsInput.dll
 C:\Program Files (x86)\Microsoft Visual Studio\Shared\Visual Studio Tools for Office\PIA\Office15\office.dll
 C:\Program Files (x86)\Microsoft Visual Studio\Shared\Visual Studio Tools for Office\PIA\Office15\Microsoft.Vbe.Interop.dll
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\PublicAssemblies\stdole.dll

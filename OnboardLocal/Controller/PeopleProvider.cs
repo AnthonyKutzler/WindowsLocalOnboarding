@@ -40,7 +40,7 @@ namespace OnboardLocal.Controller
         private static void CreateTables(SQLiteConnection conn)
         {
             const string createOnboarding =
-                "CREATE TABLE IF NOT EXISTS onboarding (pk INTEGER PRIMARY KEY AUTOINCREMENT, first TEXT NOT NULL, last TEXT NOT NULL, phone TEXT NOT NULL UNIQUE, email TEXT NOT NULL UNIQUE, background TEXT, drug TEXT, change INTEGER)";
+                "CREATE TABLE IF NOT EXISTS onboarding (pk INTEGER PRIMARY KEY AUTOINCREMENT, first TEXT NOT NULL, last TEXT NOT NULL, phone TEXT UNIQUE, email TEXT NOT NULL UNIQUE, background TEXT, drug TEXT, change INTEGER)";
             using (var sqliteCmd = new SQLiteCommand(createOnboarding, conn))
             {
                 sqliteCmd.ExecuteNonQuery();
@@ -58,7 +58,7 @@ namespace OnboardLocal.Controller
         public void InsertPerson(Person person)
         {
             const string insert =
-                "INSERT INTO onboarding(first, last, phone, email, background, drug, change) VALUES(@first, @last, @phone, @email, @background, @drug, 0)";
+                "INSERT OR IGNORE INTO onboarding(first, last, phone, email, background, drug, change) VALUES(@first, @last, @phone, @email, @background, @drug, 0)";
             
             
             var args = new Dictionary<string, object>()

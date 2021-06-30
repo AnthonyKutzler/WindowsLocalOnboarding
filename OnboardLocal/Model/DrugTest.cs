@@ -1,42 +1,66 @@
 using System;
 using System.Text.RegularExpressions;
+using CsvHelper.Configuration.Attributes;
 
 namespace OnboardLocal.Model
 {
     public class DrugTest
     {
-        public string PrimaryId;
-        public Person Person;
-        public string Account;
-        public string Blank = "";
-        public string OrderCode;
-        public string Split = "Split";
-        public string TestReason = "Pre-Employment";
-        public string ExpirationDate;
-        public string ExpirationTime = "19:00";
-        public string CollectionSite;
-        public string Observed = "No";
+        [Name("Primary ID")]
+        public string PrimaryId{ get; set; }
+        [Name("First Name")]
+        public string FirstName{ get; set; }
+        [Name("Last Name")]
+        public string LastName{ get; set; }
+        [Name("Phone Number")]
+        public string PhoneNumber{ get; set; }
+        [Name("Date of Birth")]
+        public string DOB{ get; set; }
+        [Name("Account Number")]
+        public string Account{ get; set; }
+        [Name("Modality")]
+        public string Modality{ get; set; }
+        [Name("Client Site Location")]
+        public string ClientSiteLocation{ get; set; }
+        [Name("Order Code(s)")]
+        public string OrderCode{ get; set; }
+        [Name("Collection Type")]
+        public string Split { get; set; }
+        [Name("Reason for Test")]
+        public string TestReason { get; set; }
+        [Name("Order Expiration Date")]
+        public string ExpirationDate{ get; set; }
+        [Name("Order Expiration Time")]
+        public string ExpirationTime { get; set; }
+        [Name("Collection Site Code")]
+        public string CollectionSite{ get; set; }
+        [Name("Observed")]
+        public string Observed { get; set; }
+        [Name("Email(s)")]
+        public string Email{ get; set; }
 
         
 
         public DrugTest(Person person)
         {
             PrimaryId = Regex.Replace(person.Phone, "[^a-zA-Z]+", "");
-            Person = person;
+            FirstName = person.FirstName;
+            LastName = person.Lastname;
+            PhoneNumber = person.Phone;
             Account = Properties.Settings.Default.AccountId;
-            Blank = "";
+            DOB = "";
+            Modality = "";
+            ClientSiteLocation = "";
             OrderCode = Properties.Settings.Default.OrderCode;
             Split = "Split";
             TestReason = "Pre-Employment";
-            ExpirationDate = DateTime.Now.AddDays(14).ToString();
+            ExpirationDate = DateTime.Now.AddDays(14).ToString("MM/dd/yyyy");
             ExpirationTime = "19:00";
             CollectionSite = Properties.Settings.Default.CollectionSite;
             Observed = "No";
+            Email = person.Email;
         }
 
-        public override string ToString()
-        {
-            return $"${PrimaryId}, ${Regex.Replace(Person.FirstName, "[^a-zA-Z]+", "")}, ${Regex.Replace(Person.Lastname, "[^a-zA-Z]+", "")}, ${Regex.Replace(Person.Phone, "[^a-zA-Z]+", "")}, ${Blank}, ${Account}, ${Blank}, ${OrderCode}, ${Split}, ${TestReason}, ${ExpirationDate}, ${ExpirationTime}, ${CollectionSite}, ${Observed}, ${Person.Email}";
-        }
+        
     }
 }

@@ -76,6 +76,9 @@
     <AppxPackagedFile Include="C:\Users\gob\RiderProjects\OnboardLocal\packages\Selenium.WebDriver.4.0.0-beta2\lib\net48\WebDriver.dll">
       <PackagePath>OnboardLocal\WebDriver.dll</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\gob\RiderProjects\OnboardLocal\packages\InputSimulator.1.0.4.0\lib\net20\WindowsInput.dll">
+      <PackagePath>OnboardLocal\WindowsInput.dll</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft Visual Studio\Shared\Visual Studio Tools for Office\PIA\Office15\office.dll">
       <PackagePath>OnboardLocal\office.dll</PackagePath>
     </AppxPackagedFile>

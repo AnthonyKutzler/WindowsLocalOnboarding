@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "TfuY9JfHq1MmtcxmD95a4J7zSyO27/odk+UJvWPSMbFFnCm/a+1of32q6jLZi5ZevlFRkrqMr2JFfSRyUDSKQg==",
+  "dgSpecHash": "9DuuB2pghCtusNnCUPblQufDjhdiTKHPnCYK2JwO++GcfIOON4sKoLxW2/40IZn+tYAaTL8p4ElvCgY4aa5gEg==",
   "success": true,
   "projectFilePath": "C:\\Users\\gob\\RiderProjects\\OnboardLocal\\TestProject1\\TestProject1.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\gob\\.nuget\\packages\\csvhelper\\27.1.1\\csvhelper.27.1.1.nupkg.sha512",
     "C:\\Users\\gob\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\gob\\.nuget\\packages\\inputsimulator\\1.0.4\\inputsimulator.1.0.4.nupkg.sha512",
     "C:\\Users\\gob\\.nuget\\packages\\microsoft.codecoverage\\16.5.0\\microsoft.codecoverage.16.5.0.nupkg.sha512",

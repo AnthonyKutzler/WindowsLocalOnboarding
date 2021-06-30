@@ -139,7 +139,40 @@
                 </Canvas>
             </TabItem>
             <TabItem Header="New Candidate">
-                
+                <Canvas>
+                    <StackPanel Margin="25" Width="550">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Margin="5">
+                                <Label>Amazon Email</Label>
+                                <TextBox Name="NewAmzEmail" Height="20" Width="250" />
+                            </StackPanel>
+                            <StackPanel Margin="5">
+                                <Label>Amazon Password</Label>
+                                <PasswordBox Name="NewAmzPassword" Height="20" Width="250" />
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Margin="5">
+                            <Label>First Name</Label>
+                            <TextBox Name="First" Height="20" Width="250" HorizontalAlignment="Left"/>
+                        </StackPanel>
+                        <StackPanel Margin="5">
+                            <Label>Last Name</Label>
+                            <TextBox Name="Last" Height="20" Width="250" HorizontalAlignment="Left"/>
+                        </StackPanel>
+                        <StackPanel Margin="5">
+                            <Label>Phone Number</Label>
+                            <TextBox Name="Phone" Height="20" Width="250" HorizontalAlignment="Left"/>
+                        </StackPanel>
+                        <StackPanel Margin="5">
+                            <Label>Email Address</Label>
+                            <TextBox Name="Email" Height="20" Width="250" HorizontalAlignment="Left"/>
+                        </StackPanel>
+                        <StackPanel Margin="5">
+                            <Button Click="NewOnboard_OnClick" Content="Onboard" HorizontalAlignment="Right" MinWidth="75"></Button>
+                        </StackPanel>
+                        
+                    </StackPanel>
+                </Canvas>
                 
                 
                 

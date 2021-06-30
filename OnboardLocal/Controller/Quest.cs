@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading;
 using OnboardLocal.Model;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
@@ -23,39 +24,41 @@ namespace OnboardLocal.Controller
         private const string NewTestUrl = "https://esp.employersolutions.com/ImportOrder/Index";
         private const string SearchUrl = "https://esp.employersolutions.com/Results/Summary";
         private const string BodyXpath = "//*[@id=\"table-items\"]";
-        private const string Csv = "";
+        
 
         public Quest(string user, string pass, IWebDriver driver)
         {
             Driver = driver;
-            _wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(20));
+            _wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(7));
             _user = user;
             _pass = pass;
         }
 
         public void Setup()
         {
-            Driver.Url = SearchUrl;
-            _wait.Until(driver => driver.FindElement(By.XPath(BodyXpath)));
+            //Driver.Url = SearchUrl;
+            //_wait.Until(driver => driver.FindElement(By.XPath(BodyXpath)));
         }
-
         public Person Search(Person person)
         {
-            Driver.FindElement(By.XPath("//*[@id=\"search-boxes\"]/div/input[1]")).SendKeys(person.Phone.Replace("[\\D+]", ""));
-            Driver.FindElement(By.XPath("//*[text()='Search']"));
+            var e = Driver.FindElement(By.XPath("//*[@id=\"search-boxes\"]/div/input[1]"));
+            e.Clear();    
+            e.SendKeys(Regex.Replace(person.Phone, @"[\D+]", ""));
+            Driver.FindElement(By.XPath("//*[@id=\"search-boxes\"]/div/input[14]")).Click();
             _wait.Until(driver => driver.FindElement(By.XPath(BodyXpath)));
-            DefineColumnIndex();
-
+            Thread.Sleep(3000);
             var oldValue = 0;
             try
             {
-                foreach (var ele in Driver.FindElements(By.XPath($"${BodyXpath}/*")))
+                var elements = Driver.FindElements(By.XPath($"{BodyXpath}/*"));
+                if (elements.Count < 1) throw new NoSuchElementException();
+                foreach (var ele in elements)
                 {
-                    var name = FormatName(ele.FindElement(By.XPath($"./td[${_nameIndex}]")).Text);
+                    var name = FormatName(ele.FindElement(By.XPath($"./td[{_nameIndex}]")).Text).ToLower();
                     //If not person in question, continue.
-                    if (!name.Contains(FormatName(person.FirstName)) ||
-                        !name.Contains(FormatName(person.Lastname))) continue;
-                    var result = ele.FindElement(By.XPath($"./td[${_resultIndex}]")).Text;
+                    if (!name.Contains(FormatName(person.FirstName).ToLower()) ||
+                        !name.Contains(FormatName(person.Lastname).ToLower())) throw new NoSuchElementException();
+                    var result = ele.FindElement(By.XPath($"./td[{_resultIndex}]")).Text;
                     var newValue = ValueFromDrugResult(result);
                     if (newValue <= oldValue) continue;
                     person.Drug = result;
@@ -80,43 +83,56 @@ namespace OnboardLocal.Controller
                 Driver.Url = SearchUrl;
                 Driver.FindElement(By.XPath("//*[@id=\"UserName\"]")).SendKeys(_user);
                 Driver.FindElement(By.XPath("//*[@id=\"Password\"]")).SendKeys(_pass);
-                Driver.FindElement(By.XPath("//*[text()='Secure sign in']")).Click();
-                _wait.Until(driver => driver.FindElement(By.XPath("//*[text()='DASHBOARD'")));
-                return true;
+                Driver.FindElement(By.XPath("//*[@id=\"loginContainer\"]/div/div/form/fieldset/button")).Click();
+                _wait.Until(driver => driver.FindElement(By.XPath("//*[@id=\"UserName\"]")));
+                return false;
             }
             catch (NoSuchElementException)
             {
-                _loginAttempts++;
-                return false;
+                DefineColumnIndex();
+                return true;
+            }
+            catch (WebDriverTimeoutException)
+            {
+                DefineColumnIndex();
+                return true;
             }
         }
 
         public void SetupNewTests()
         {
+            var csv = Path.Combine(Environment.CurrentDirectory, "data") + @"\drug.csv";
             if (!Login()) return;
             try
             {
-                const string line =
-                    "Primary ID, First Name, Last Name, Primary Phone, Date of Birth, Account Number, Modality, " 
-                    + "Client Site Location, Order Code(s), Collection Type, Reason for Test, Order Expiration Date, " 
-                    + "Order Expiration Time, Collection Site Code, Observed, Email(s)";
-                new CsvService<DrugTest>().CreateCsvFile(line, _newTests, Csv);
+                string[] line = {"Primary ID", "First Name", "Last Name", "Primary Phone", "Date of Birth", "Account Number", "Modality",
+                    "Client Site Location", "Order Code(s)", "Collection Type", "Reason for Test", "Order Expiration Date",
+                    "Order Expiration Time", "Collection Site Code", "Observed", "Email(s)"} ;
+                
+                    
+                    //"Primary ID,First Name,Last Name,Primary Phone,Date of Birth,Account Number,Modality,Client Site Location,Order Code(s),Collection Type,Reason for Test,Order Expiration Date,Order Expiration Time,Collection Site Code,Observed,Email(s)";}
+                new CsvService<DrugTest>().CreateCsvFile(line, _newTests, csv);
 
-                if (!Login()) return;
+                if (!Login() || _newTests.Count < 1) return;
                 Driver.Url = NewTestUrl;
-                Driver.FindElement(By.XPath("/html/body/div[2]/div[2]/div[2]/div[1]/div[3]/form/div[2]/div[1]/div/input[2]"));
-                Driver.FindElement(By.XPath("//*[@id=\"ImportFileName\"]")).SendKeys(Csv);
+                Driver.FindElement(
+                    By.XPath("/html/body/div[2]/div[2]/div[2]/div[1]/div[3]/form/div[2]/div[1]/div/input[2]")).Click();
+                Driver.FindElement(By.XPath("//*[@id=\"ImportFileName\"]")).SendKeys(csv);
                 Driver.FindElement(By.XPath("//*[@id=\"ui-id-4\"]/input[2]")).Click();
-                Driver.FindElement(By.XPath("//*[text()='NEXT']")).Click();
-                Driver.FindElement(By.XPath("//*[text()='IMPORT']")).Click();
-
+                Driver.FindElement(By.XPath("//*[@id=\"import-order-form\"]/div[2]/div[4]/div/input")).Click();
+                Driver.FindElement(By.XPath("//*[@id=\"Import\"]")).Click();
+                File.Delete(csv);
             }
-            catch (Exception) { /* ignored*/ }
+            catch (Exception e)
+            {
+                Console.Write(e.StackTrace);
+                /* ignored*/
+            }
         }
 
         private static string FormatName(string name)
         {
-            return Regex.Replace(name, "[^a-zA-Z]+", "");
+            return Regex.Replace(name, "[^a-zA-Z]+", " ");
         }
 
         private static int ValueFromDrugResult(string result)
@@ -147,12 +163,13 @@ namespace OnboardLocal.Controller
             if (_nameIndex != 0 && _resultIndex != 0) return;
             foreach (var ele in Driver.FindElements(By.XPath("//*[@id=\"results-table\"]/thead/tr[2]/*")))
             {
-                if (ele.GetAttribute("class").Contains("doner-name"))
-                    _nameIndex = _resultIndex;
+                if (ele.GetAttribute("class").Contains("donor-name"))
+                    _nameIndex = _resultIndex+1;
                 else if (ele.GetAttribute("class").Contains("result-status"))
                     break;
                 _resultIndex++;
             }
+            _resultIndex++;
         }
     }
 }

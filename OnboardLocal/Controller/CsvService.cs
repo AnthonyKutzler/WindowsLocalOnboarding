@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using OnboardLocal.Model;
+using CsvHelper;
 
 namespace OnboardLocal.Controller
 {
@@ -40,17 +42,26 @@ namespace OnboardLocal.Controller
         public void ExportPeople(string pathToFile, IEnumerable<T> people)
         {
             const string header = "First, Last, Phone, Email, Background, Drug";
-            CreateCsvFile(header, people, pathToFile);
+            //CreateCsvFile(header, people, pathToFile);
         }
 
-        public void CreateCsvFile(string header, IEnumerable<T> list, string path)
+        public void CreateCsvFile(string[] header, IEnumerable<T> list, string path)
         {
-            var csv = new StringBuilder(header);
-            foreach (var item in list)
+            using(var writer = new StreamWriter(path))
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csv.WriteHeader<T>();
+                csv.WriteRecords(list);
+            }
+            
+            
+            
+            //var csv = new StringBuilder(header);
+            /*foreach (var item in list)
             {
                 csv.AppendLine(item.ToString());
             }
             File.WriteAllText(path, csv.ToString());
-        }
+        */}
     }
 }
