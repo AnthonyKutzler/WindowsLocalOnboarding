@@ -174,7 +174,7 @@ namespace OnboardLocal
 
         private void ChooseChromedriver(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.ChromedriverPath = Path.GetDirectoryName(ChooseFile("Executable (*.exe)|*.exe"));
+            Properties.Settings.Default.ChromedriverPath = Path.GetDirectoryName(ChooseFile(new OpenFileDialog {Filter = "Executable (*.exe)|*.exe"}));
             Properties.Settings.Default.Save();
             ChromeDriverPath.Text = Properties.Settings.Default.ChromedriverPath;
         }
@@ -192,17 +192,16 @@ namespace OnboardLocal
             }
         }
 
-        private static string ChooseFile(string filter)
+        private static string ChooseFile(FileDialog dialog)
         {
-            var fileDialog = new OpenFileDialog {Filter = filter};
-            return fileDialog.ShowDialog() == true ? fileDialog.FileName : "";
+            return dialog.ShowDialog() == true ? dialog.FileName : "";
         }
         
         private void ImportData(object sender, RoutedEventArgs e)
         {
             try
             {
-                new CsvService<Person>().ImportPeople(ChooseFile("CSV (*.csv)|*.csv|All Files (*.*)|*.*"));
+                new CsvService<Person>().ImportPeople(ChooseFile(new OpenFileDialog {Filter = "CSV (*.csv)|*.csv|All Files (*.*)|*.*"}));
             }
             catch (FileNotFoundException ex)
             {
@@ -212,7 +211,10 @@ namespace OnboardLocal
 
         private void ExportData(object sender, RoutedEventArgs e)
         {
-            new CsvService<Person>().ExportPeople(ChooseFile("Comma-separated values (*.csv)|*.csv|All Files (*.*)|*.*"), new PeopleProvider().GetPeople());
+            var saveFile = new SaveFileDialog();
+            FileDialog value = new SaveFileDialog();
+            
+            new CsvService<Person>().ExportPeople(ChooseFile(new SaveFileDialog {Filter ="Comma-separated values (*.csv)|*.csv|All Files (*.*)|*.*"}), new PeopleProvider().GetPeople());
         }
 
         private void NewOnboard_OnClick(object sender, RoutedEventArgs e)
