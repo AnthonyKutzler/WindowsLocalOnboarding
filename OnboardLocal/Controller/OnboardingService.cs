@@ -23,12 +23,15 @@ namespace OnboardLocal.Controller
             FilterBackgrounds();
             var driver = StartDriver(window.ChromeDriverPath.Text);
             //Check for backgrounds
-            _all = _all.Concat(UpdatePeople(_filter, new Cortex(window.AmzEmail.Text, window.AmzPassword.Password, driver)));
+            var cortex = new Cortex(window.AmzEmail.Text, window.AmzPassword.Password, driver);
+            _all = _all.Concat(UpdatePeople(_filter, cortex));
             FilterDrugScreens(window.DrugScreen);
             //check for drug tests
             var quest = new Quest(window.QuestUsername.Text, window.QuestPassword.Password, driver);
             _all = _all.Concat(UpdatePeople(_filter, quest));
             quest.SetupNewTests();
+            if(quest.negDrug.Count > 0)
+                cortex.UpdateDrugTests(quest.negDrug);
             //setup new drug tests
             peopleProvider.UpdatePeople(_all);
             driver.Close();
@@ -44,7 +47,7 @@ namespace OnboardLocal.Controller
                 driver.Close();
                 new PeopleProvider().InsertPerson(person);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 driver.Close();
             }

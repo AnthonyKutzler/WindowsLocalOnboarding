@@ -12,6 +12,7 @@ namespace OnboardLocal.Controller
 {
     public class Quest : IWebService
     {
+        public List<Person> negDrug { get; set; }
         public IWebDriver Driver { get; set; }
         private readonly string _user;
         private readonly string _pass;
@@ -32,6 +33,7 @@ namespace OnboardLocal.Controller
             _wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(7));
             _user = user;
             _pass = pass;
+            negDrug = new List<Person>();
         }
 
         public void Setup()
@@ -63,6 +65,11 @@ namespace OnboardLocal.Controller
                     if (newValue <= oldValue) continue;
                     person.Drug = result;
                     oldValue = newValue;
+                }
+
+                if (person.Drug == "Negative")
+                {
+                    negDrug.Add(person);
                 }
             }
             catch (NoSuchElementException)
@@ -121,6 +128,7 @@ namespace OnboardLocal.Controller
                 Driver.FindElement(By.XPath("//*[@id=\"ui-id-4\"]/input[2]")).Click();
                 Driver.FindElement(By.XPath("//*[@id=\"import-order-form\"]/div[2]/div[4]/div/input")).Click();
                 Driver.FindElement(By.XPath("//*[@id=\"Import\"]")).Click();
+                Thread.Sleep(3000);
                 File.Delete(csv);
             }
             catch (Exception e)

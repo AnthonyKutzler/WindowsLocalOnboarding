@@ -39,18 +39,9 @@ namespace OnboardLocal
             StationCode.Text = Properties.Settings.Default.StationCode ?? "";
             AmzEmail.Text = Properties.Settings.Default.AmzEmail ?? "";
             QuestUsername.Text = Properties.Settings.Default.QuestUsername ?? "";
-            
-            
-            try
-            {
-                var people = new PeopleService().GetPeopleSorted().ToList();
-                if (people.Count > 0)
-                    ResultsGrid.ItemsSource = people;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
+
+
+            SetTableData();
         }
         
         
@@ -66,7 +57,7 @@ namespace OnboardLocal
             {
                 MessageBox.Show(ex.Message);
             }
-
+            SetTableData();
 
         }
         
@@ -221,6 +212,26 @@ namespace OnboardLocal
         {
             new OnboardingService().NewOnboard(this);
             
+        }
+
+        private void Insert_OnClick(object sender, RoutedEventArgs e)
+        {
+            //TODO: DATA Verification
+            new PeopleProvider().InsertPerson(new Person(First.Text, Last.Text, Phone.Text, Email.Text, "", ""));
+        }
+
+        private void SetTableData()
+        {
+            try
+            {
+                var people = new PeopleService().GetPeopleSorted().ToList();
+                if (people.Count > 0)
+                    ResultsGrid.ItemsSource = people;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
         }
     }
 

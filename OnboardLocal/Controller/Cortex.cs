@@ -172,8 +172,8 @@ namespace OnboardLocal.Controller
             {
                 Driver.FindElement(By.XPath(ExpanderXpath)).Click();
                 _wait.Until(driver => driver.FindElement(By.XPath(BackgroundXpath)));
-                var phone = Driver.FindElement(By.XPath("\\*[text()='Mobile']/../span")).Text;
-                person.Phone = phone.Contains("not") ? "" : phone;
+                var phone = Driver.FindElement(By.XPath("//*[text()='Mobile:']/../span")).Text;
+                person.Phone = phone.Contains("not") ? person.Phone : phone;
                 var classes = Driver.FindElement(By.XPath(BackgroundXpath)).GetAttribute("class");
                 if (classes.Contains("completed"))
                     person.Background = "Passed";
@@ -183,11 +183,14 @@ namespace OnboardLocal.Controller
                     person.Background = "Failed";
                 else
                 {
-                    if (Driver.FindElement(By.XPath("//*[text()='Associate Settings']/../..")).GetAttribute("class")
-                        .Contains("complete"))
+                    if (Driver.FindElement(By.XPath("//*[text()='Associate Settings']/..")).GetAttribute("class")
+                        .Contains("completed"))
                         person.Background = "Not Started";
-                    else 
+                    else
+                    {
                         UpdateAssociateSettings();
+                        person.Background = "Badge Updated";
+                    }
                 }
                 return person;
             }
@@ -212,28 +215,46 @@ namespace OnboardLocal.Controller
 
         private void UpdateAssociateSettings()
         {
-            var inputSim = new InputSimulator();
-            var ele = Driver.FindElement(By.XPath("//*[text()='Drug Test']/.."));
-            ele.FindElement(By.XPath("./[text()='Edit']")).Click();
-            //Driver.FindElement(By.XPath(AssociateXpath)).Click();
-            Driver.FindElement(By.XPath("//*[@id=\"dsp-onboarding\"]/div/main/div/span[3]/div/div/div[2]/div[1]/div/div/span")).Click();
-            inputSim.Keyboard.TextEntry(Properties.Settings.Default.StationCode);
-            inputSim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
-            Driver.FindElement(By.XPath("//*[@id=\"dsp-onboarding\"]/div/main/div/span[3]/div/div/div[2]/div[2]/div/div")).Click();
-            inputSim.Keyboard.TextEntry("Amazon Logistics");
-            inputSim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
-            Driver.FindElement(By.XPath("//*[@id=\"supervisor-alias\"]")).SendKeys(Properties.Settings.Default.BadgeId);
-            Driver.FindElement(By.XPath("//*[text()='Confirm']"));
+            try
+            {
+                var inputSim = new InputSimulator();
+                Driver.FindElement(By.XPath("//*[text()='Associate Settings']/../div/h3/a")).Click();
+                _wait.Until(driver =>
+                    driver.FindElement(
+                        By.XPath(
+                            "//*[@id=\"dsp-onboarding\"]/div/main/div/span[3]/div/div/div[2]/div[1]/div/div/span")));
+                //Driver.FindElement(By.XPath(AssociateXpath)).Click();
+                Driver.FindElement(
+                        By.XPath("//*[@id=\"dsp-onboarding\"]/div/main/div/span[3]/div/div/div[2]/div[1]/div/div/span"))
+                    .Click();
+                inputSim.Keyboard.TextEntry(Properties.Settings.Default.StationCode);
+                inputSim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
+                Driver.FindElement(
+                    By.XPath("//*[@id=\"dsp-onboarding\"]/div/main/div/span[3]/div/div/div[2]/div[2]/div/div")).Click();
+                inputSim.Keyboard.TextEntry("Amazon Logistics");
+                inputSim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
+                Driver.FindElement(By.XPath("//*[@id=\"supervisor-alias\"]"))
+                    .SendKeys(Properties.Settings.Default.BadgeId);
+                Driver.FindElement(By.XPath("//*[text()='Confirm']"));
+            }
+            catch (NoSuchElementException ex)
+            {
+                Console.Write(ex.Message);
+            }
         }
 
-        private void UpdateDrugTest()
+        public void UpdateDrugTests(IEnumerable<Person> people)
         {
-            //TODO
-            
-            //*[@id="manual-task-yes"]
+            foreach (var person in people)
+            {
+                Search(person);
+                Driver.FindElement(By.XPath("//*[text()='Drug Test']/../div/h3/a")).Click();
+                _wait.Until(driver => driver.FindElement(By.XPath("//*[text()='Yes']")));
+                Driver.FindElement(By.XPath("//*[text()='Yes']/../input")).Click();
+                Driver.FindElement(By.XPath("//*[text()='Confirm']")).Click();
+            }
+            //TODO: Test
         }
-
-
     }
 
 }

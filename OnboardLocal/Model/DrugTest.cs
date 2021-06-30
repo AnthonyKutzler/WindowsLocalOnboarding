@@ -43,10 +43,10 @@ namespace OnboardLocal.Model
 
         public DrugTest(Person person)
         {
-            PrimaryId = Regex.Replace(person.Phone, "[^a-zA-Z]+", "");
+            PrimaryId = Regex.Replace(person.Phone, @"[\D+]", "");
             FirstName = person.FirstName;
             LastName = person.Lastname;
-            PhoneNumber = person.Phone;
+            PhoneNumber = Regex.Replace(person.Phone, @"[\D+]", "");
             Account = Properties.Settings.Default.AccountId;
             DOB = "";
             Modality = "";

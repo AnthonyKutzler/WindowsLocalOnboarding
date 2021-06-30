@@ -167,8 +167,11 @@
                             <Label>Email Address</Label>
                             <TextBox Name="Email" Height="20" Width="250" HorizontalAlignment="Left"/>
                         </StackPanel>
-                        <StackPanel Margin="5">
-                            <Button Click="NewOnboard_OnClick" Content="Onboard" HorizontalAlignment="Right" MinWidth="75"></Button>
+                        <StackPanel Margin="25">
+                            <StackPanel Orientation="Horizontal">
+                                <Button Click="Insert_OnClick" Content="Insert to table" MinWidth="75" Margin="0,0,15,0"></Button>
+                                <Button Click="NewOnboard_OnClick" Content="Onboard" HorizontalAlignment="Right" MinWidth="75"></Button>
+                            </StackPanel>
                         </StackPanel>
                         
                     </StackPanel>

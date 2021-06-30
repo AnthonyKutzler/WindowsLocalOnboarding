@@ -51,6 +51,7 @@ namespace OnboardLocal.Controller
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
                 csv.WriteHeader<T>();
+                csv.NextRecord();
                 csv.WriteRecords(list);
             }
             
