@@ -14,24 +14,33 @@ namespace OnboardLocal.Controller
     {
         private IEnumerable<Person> _all;
         private IEnumerable<Person> _filter;
+        private IEnumerable<Person> _filter2;
         
-        public void RunApplication(MainWindow window)
+        public void RunApplication(string amzPassword, string questPassword, int drugScreen)
         {
             
             var peopleProvider = new PeopleProvider();
             _all = peopleProvider.GetPeople();
             FilterBackgrounds();
-            var driver = StartDriver(window.ChromeDriverPath.Text);
-            //Check for backgrounds
-            var cortex = new Cortex(window.AmzEmail.Text, window.AmzPassword.Password, driver);
-            _all = _all.Concat(UpdatePeople(_filter, cortex));
-            FilterDrugScreens(window.DrugScreen);
-            //check for drug tests
-            var quest = new Quest(window.QuestUsername.Text, window.QuestPassword.Password, driver);
-            _all = _all.Concat(UpdatePeople(_filter, quest));
-            quest.SetupNewTests();
-            if(quest.negDrug.Count > 0)
-                cortex.UpdateDrugTests(quest.negDrug);
+            var driver = StartDriver(Properties.Settings.Default.ChromedriverPath);
+            try
+            {
+                //Check for backgrounds
+                var cortex = new Cortex(Properties.Settings.Default.AmzEmail, amzPassword, driver);
+                _all = _all.Union(UpdatePeople(_filter, cortex));
+                FilterDrugScreens(drugScreen);
+                //check for drug tests
+                var quest = new Quest(Properties.Settings.Default.QuestUsername, questPassword, driver);
+                _all = _all.Union(UpdatePeople(_filter, quest));
+                quest.SetupNewTests();
+                //if (quest.NegDrug.Count > 0)
+                    //cortex.UpdateDrugTests(quest.NegDrug);
+            }
+            catch (LoginException ex)
+            {
+                throw new LoginException(ex.Message);
+            }
+
             //setup new drug tests
             peopleProvider.UpdatePeople(_all);
             driver.Close();
@@ -82,8 +91,8 @@ namespace OnboardLocal.Controller
 
         private void FilterBackgrounds()
         {
-            _filter = _all.Where(person => person.Background == "Pending" || person.Background == "");
-            _all = _all.Where(person => person.Background != "Pending" && person.Background != "");
+            _filter = _all.Where(person => person.Background == "Pending" || person.Background == "" || person.Background == "Not Started");
+            _all = _all.Where(person => !(person.Background == "Pending" || person.Background == "" || person.Background == "Not Started"));
         }
 
         private void FilterNewDrugTests(int when)
@@ -108,7 +117,7 @@ namespace OnboardLocal.Controller
 
         private void FilterDrugScreens(int when)
         {
-            var backgroundText = "Passed";
+            string backgroundText;
             switch (when)
             {
                 case 1:

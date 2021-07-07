@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.Design;
 using System.Text.RegularExpressions;
+using System.Threading;
 using WindowsInput;
 using WindowsInput.Native;
 using OnboardLocal.Model;
@@ -21,6 +23,7 @@ namespace OnboardLocal.Controller
         private const string EmailXpath = "//*[@id=\"email-input\"]";
         private const string NameXpath = "//*[@id=\"name-input\"]";
         private const string TBody = "//*[@id=\"dsp-onboarding\"]/div/main/div[3]/div[2]/div[1]/table/tbody";
+        //*[@id="dsp-onboarding"]/div/main/div[3]/div[2]/div[1]/table/tbody
         private const string ExpanderXpath = "//*[text()='Onboarding']";
         
         //TODO: Test this
@@ -48,7 +51,7 @@ namespace OnboardLocal.Controller
         public void Setup()
         {
             Driver.Url = Url;
-            _wait.Until(driver => driver.FindElement(By.XPath(TBody)));
+            _wait.Until(driver => driver.FindElement(By.TagName("tbody")));
         }
 
         public Person Search(Person person)
@@ -58,20 +61,20 @@ namespace OnboardLocal.Controller
                 try
                 {
                     Search(EmailXpath, person.Email);
-                    _wait.Until(driver => driver.FindElement(By.XPath(TBody)));
+                    _wait.Until(driver => driver.FindElement(By.TagName("tbody")));
                 }
                 catch (NoSuchElementException)
                 {
                     Search(NameXpath, person.Lastname);
-                    _wait.Until(driver => driver.FindElement(By.XPath(TBody)));
+                    _wait.Until(driver => driver.FindElement(By.TagName("tbody")));
                 }
 
-                var rows = Driver.FindElements(By.XPath($"{TBody}/*"));
-                if (rows.Count > 1)
+                var rows = Driver.FindElement(By.TagName("tbody")).FindElements(By.TagName("tr"));
+                if (rows.Count < 1)
                 {
                     try
                     {
-                        return Search(FindEmailFromNames(rows, person));
+                        return Search(FindEmailFromNames(person));
                     }
                     catch (ArgumentException)
                     {
@@ -121,6 +124,19 @@ namespace OnboardLocal.Controller
                 return true;
             }
 
+            try
+            {
+                Driver.FindElement(By.XPath("//*[@id=\"auth-captcha-image\"]"));
+                Driver.FindElement(By.XPath("//*[@id=\"ap_password\"]")).SendKeys(_pass);
+                Thread.Sleep(30000);
+                Driver.FindElement(By.XPath("//*[@id=\"ap_email\"]"));
+            }
+            catch (NoSuchElementException)
+            {
+                return true;
+            }
+            
+
             //Look for Captcha, if found notify event handler of captcha issues.
             /*try
             {
@@ -137,27 +153,41 @@ namespace OnboardLocal.Controller
         }
         
 
-        private Person FindEmailFromNames(ReadOnlyCollection<IWebElement> rows, Person person)
+        private Person FindEmailFromNames(Person person)
         {
-            IWebElement ele = null;
-            var prog = 0;
-            foreach (var row in rows)
+            try
             {
-                var name = row.FindElement(By.XPath("./td[1]/a")).Text;
-                var progress = int.Parse(row.FindElement(By.XPath("./td[6]")).Text.Split('/')[0]);
-                if (name.Contains(person.FirstName) && name.Contains(person.Lastname) && progress > prog)
+                Search(EmailXpath, person.Email);
+                _wait.Until(driver => driver.FindElement(By.TagName("tbody")));
+                //var rows = Driver.FindElements(By.XPath($"{TBody}/*"));
+                string ele = null;
+                var prog = 0;
+                do
                 {
-                    prog = progress;
-                    ele = row;
-                }
-                        
+                    var rows = Driver.FindElement(By.TagName("tbody")).FindElements(By.TagName("tr"));
+                    //var rows = Driver.FindElements(By.XPath($"{TBody}/*"));
+                    foreach (var row in rows)
+                    {
+                        var name = row.FindElement(By.XPath("./td[1]/a")).Text;
+                        var progress = int.Parse(row.FindElement(By.XPath("./td[6]")).Text.Split('/')[0]);
+                        if (name.Contains(person.FirstName) && name.Contains(person.Lastname) && progress > prog)
+                        {
+                            prog = progress;
+                            ele = row.FindElement(By.XPath("./td[4]")).Text;
+                        }
+                    }
+                } while (Driver.FindElement(By.XPath("//*[@id=\"dsp-onboarding\"]/div/main/div[3]/div[2]/div[2]/div/div/button[2]")).Enabled);
+
+                if (ele == null)
+                    throw new ArgumentNullException();
+                
+                person.Email = ele;
+                return person;
             }
-
-            if (ele == null)
+            catch (NoSuchElementException)
+            {
                 throw new ArgumentNullException();
-
-            person.Email = ele.FindElement(By.XPath("./td[4]")).Text;
-            return person;
+            }
         }
 
         private Person GatherInfo(Person person)
@@ -198,19 +228,25 @@ namespace OnboardLocal.Controller
 
         public void NewOnboard(Person person)
         {
-            Login();
-            Driver.Url = Url;
-            _wait.Until(driver => driver.FindElement(By.XPath(TBody)));
-            Driver.FindElement(By.XPath("//*[text()='Add a Delivery Associate']")).Click();
-            _wait.Until(driver => driver.FindElement(By.XPath("//*[text()='Send']")));
-            Driver.FindElement(By.XPath("//*[@id=\"root_FIRST_NAME\"]")).SendKeys(person.FirstName);
-            Driver.FindElement(By.XPath("//*[@id=\"root_LAST_NAME\"]")).SendKeys(person.Lastname);
-            Driver.FindElement(By.XPath("//*[@id=\"root_EMAIL\"]")).SendKeys(person.Email);
-            Driver.FindElement(By.XPath("//*[text()='Send']")).Click();
-            _wait.Until(driver => driver.FindElement(By.XPath(ExpanderXpath)));
-            Driver.FindElement(By.XPath(ExpanderXpath)).Click();
-            UpdateAssociateSettings();
-
+            try
+            {
+                Login();
+                Driver.Url = Url;
+                _wait.Until(driver => driver.FindElement(By.TagName("tbody")));
+                Driver.FindElement(By.XPath("//*[text()='Add a Delivery Associate']")).Click();
+                _wait.Until(driver => driver.FindElement(By.XPath("//*[text()='Send']")));
+                Driver.FindElement(By.XPath("//*[@id=\"root_FIRST_NAME\"]")).SendKeys(person.FirstName);
+                Driver.FindElement(By.XPath("//*[@id=\"root_LAST_NAME\"]")).SendKeys(person.Lastname);
+                Driver.FindElement(By.XPath("//*[@id=\"root_EMAIL\"]")).SendKeys(person.Email);
+                Driver.FindElement(By.XPath("//*[text()='Send']")).Click();
+                _wait.Until(driver => driver.FindElement(By.XPath(ExpanderXpath)));
+                Driver.FindElement(By.XPath(ExpanderXpath)).Click();
+                UpdateAssociateSettings();
+            }
+            catch (Exception)
+            {
+                throw new NoSuchElementException("Email already Onboarded");
+            }
         }
 
         private void UpdateAssociateSettings()

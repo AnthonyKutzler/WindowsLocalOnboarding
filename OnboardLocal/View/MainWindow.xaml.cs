@@ -10,6 +10,7 @@ using System.Windows.Media;
 using Microsoft.Win32;
 using OnboardLocal.Controller;
 using OnboardLocal.Model;
+using OpenQA.Selenium;
 
 namespace OnboardLocal
 {
@@ -39,26 +40,40 @@ namespace OnboardLocal
             StationCode.Text = Properties.Settings.Default.StationCode ?? "";
             AmzEmail.Text = Properties.Settings.Default.AmzEmail ?? "";
             QuestUsername.Text = Properties.Settings.Default.QuestUsername ?? "";
-
+            AmzPassword.Password = Properties.Settings.Default.AmzPassword ?? "";
+            QuestPassword.Password = Properties.Settings.Default.QuestPassword ?? "";
 
             SetTableData();
         }
         
         
-        private void Run_OnClick(object sender, RoutedEventArgs e)
+        private async void Run_OnClick(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.AmzEmail = AmzEmail.Text;
             Properties.Settings.Default.QuestUsername = QuestUsername.Text;
+            Properties.Settings.Default.AmzPassword = AmzPassword.Password;
+            Properties.Settings.Default.QuestPassword = QuestPassword.Password;
+            Properties.Settings.Default.Save();
             try
             {
-                new OnboardingService().RunApplication(this);
+                await System.Threading.Tasks.Task.Run(() => RunOnboarding(AmzPassword.Password, QuestPassword.Password, DrugScreen));
             }
             catch (LoginException ex)
             {
                 MessageBox.Show(ex.Message);
             }
+            catch (WebDriverException ex2)
+            {
+                Console.Write(ex2.Message);
+                MessageBox.Show("Chromedriver closed unexpectedly!");
+            }
             SetTableData();
 
+        }
+
+        private async System.Threading.Tasks.Task RunOnboarding(string amzPass, string questPass, int drugScreen)
+        {
+            new OnboardingService().RunApplication(amzPass, questPass, drugScreen);
         }
         
 
@@ -198,26 +213,42 @@ namespace OnboardLocal
             {
                 MessageBox.Show(ex.Message);
             }
+            SetTableData();
         }
 
         private void ExportData(object sender, RoutedEventArgs e)
         {
-            var saveFile = new SaveFileDialog();
-            FileDialog value = new SaveFileDialog();
-            
-            new CsvService<Person>().ExportPeople(ChooseFile(new SaveFileDialog {Filter ="Comma-separated values (*.csv)|*.csv|All Files (*.*)|*.*"}), new PeopleProvider().GetPeople());
+            try
+            {
+                new CsvService<Person>().ExportPeople(
+                    ChooseFile(new SaveFileDialog
+                        {Filter = "Comma-separated values (*.csv)|*.csv|All Files (*.*)|*.*"}),
+                    new PeopleProvider().GetPeople());
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Something went wrong. Error104!");
+            }
         }
 
         private void NewOnboard_OnClick(object sender, RoutedEventArgs e)
         {
-            new OnboardingService().NewOnboard(this);
-            
+            try
+            {
+                new OnboardingService().NewOnboard(this);
+            }
+            catch(NoSuchElementException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
 
         private void Insert_OnClick(object sender, RoutedEventArgs e)
         {
             //TODO: DATA Verification
             new PeopleProvider().InsertPerson(new Person(First.Text, Last.Text, Phone.Text, Email.Text, "", ""));
+            SetTableData();
         }
 
         private void SetTableData()

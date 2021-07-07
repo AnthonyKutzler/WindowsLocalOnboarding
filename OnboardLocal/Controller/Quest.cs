@@ -12,12 +12,11 @@ namespace OnboardLocal.Controller
 {
     public class Quest : IWebService
     {
-        public List<Person> negDrug { get; set; }
+        public List<Person> NegDrug { get; set; }
         public IWebDriver Driver { get; set; }
         private readonly string _user;
         private readonly string _pass;
         private readonly WebDriverWait _wait;
-        private int _loginAttempts;
         private int _nameIndex;
         private int _resultIndex;
         private List<DrugTest> _newTests = new List<DrugTest>();
@@ -30,10 +29,10 @@ namespace OnboardLocal.Controller
         public Quest(string user, string pass, IWebDriver driver)
         {
             Driver = driver;
-            _wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(7));
+            _wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(15));
             _user = user;
             _pass = pass;
-            negDrug = new List<Person>();
+            NegDrug = new List<Person>();
         }
 
         public void Setup()
@@ -69,7 +68,7 @@ namespace OnboardLocal.Controller
 
                 if (person.Drug == "Negative")
                 {
-                    negDrug.Add(person);
+                    NegDrug.Add(person);
                 }
             }
             catch (NoSuchElementException)
@@ -85,7 +84,7 @@ namespace OnboardLocal.Controller
         {
             try
             {
-                if (_loginAttempts > 3)
+                if (false)
                     throw new LoginException("Quest Failed to login, Please Check Password!");
                 Driver.Url = SearchUrl;
                 Driver.FindElement(By.XPath("//*[@id=\"UserName\"]")).SendKeys(_user);
@@ -112,29 +111,43 @@ namespace OnboardLocal.Controller
             if (!Login()) return;
             try
             {
-                string[] line = {"Primary ID", "First Name", "Last Name", "Primary Phone", "Date of Birth", "Account Number", "Modality",
-                    "Client Site Location", "Order Code(s)", "Collection Type", "Reason for Test", "Order Expiration Date",
-                    "Order Expiration Time", "Collection Site Code", "Observed", "Email(s)"} ;
-                
-                    
-                    //"Primary ID,First Name,Last Name,Primary Phone,Date of Birth,Account Number,Modality,Client Site Location,Order Code(s),Collection Type,Reason for Test,Order Expiration Date,Order Expiration Time,Collection Site Code,Observed,Email(s)";}
-                new CsvService<DrugTest>().CreateCsvFile(line, _newTests, csv);
+
+
+
+                //"Primary ID,First Name,Last Name,Primary Phone,Date of Birth,Account Number,Modality,Client Site Location,Order Code(s),Collection Type,Reason for Test,Order Expiration Date,Order Expiration Time,Collection Site Code,Observed,Email(s)";}
+                new CsvService<DrugTest>().CreateCsvFile(_newTests, csv);
 
                 if (!Login() || _newTests.Count < 1) return;
                 Driver.Url = NewTestUrl;
-                Driver.FindElement(
-                    By.XPath("/html/body/div[2]/div[2]/div[2]/div[1]/div[3]/form/div[2]/div[1]/div/input[2]")).Click();
+                Driver.FindElement(By.XPath("/html/body/div[2]/div[2]/div[2]/div[1]/div[3]/form/div[2]/div[1]/div/input[2]")).Click();
                 Driver.FindElement(By.XPath("//*[@id=\"ImportFileName\"]")).SendKeys(csv);
                 Driver.FindElement(By.XPath("//*[@id=\"ui-id-4\"]/input[2]")).Click();
-                Driver.FindElement(By.XPath("//*[@id=\"import-order-form\"]/div[2]/div[4]/div/input")).Click();
-                Driver.FindElement(By.XPath("//*[@id=\"Import\"]")).Click();
-                Thread.Sleep(3000);
-                File.Delete(csv);
+                var ele = Driver.FindElement(By.XPath("//*[@id=\"import-order-form\"]/div[2]/div[4]/div/input"));
+                ScrollTo(ele);
+                _wait.Until(driver => driver.FindElement(By.XPath("//*[@id=\"import-order-form\"]/div[2]/div[4]/div/input")));
+                ele.Click();
+                ele = Driver.FindElement(By.XPath("//*[@id=\"Import\"]"));
+                ScrollTo(ele);
+                _wait.Until(driver => driver.FindElement(By.XPath("//*[@id=\"Import\"]")));
+                ele.Click();
+                Thread.Sleep(5000);
+                //File.Delete(csv);
             }
             catch (Exception e)
             {
                 Console.Write(e.StackTrace);
                 /* ignored*/
+            }
+            finally
+            {
+                try
+                {
+                    File.Delete(csv);
+                }
+                catch (Exception e)
+                {
+                    
+                }
             }
         }
 
@@ -151,7 +164,7 @@ namespace OnboardLocal.Controller
                     return 1;
                 case "Positive":
                     return 2;
-                case "Scheduled":
+                case "Ordered":
                     return 3;
                 case "Collected":
                     return 4;
@@ -178,6 +191,10 @@ namespace OnboardLocal.Controller
                 _resultIndex++;
             }
             _resultIndex++;
+        }
+        public void ScrollTo(IWebElement element)
+        {
+            ((IJavaScriptExecutor)Driver).ExecuteScript("arguments[0].scrollIntoView(true);", element);
         }
     }
 }

@@ -118,5 +118,29 @@ namespace OnboardLocal.Properties {
                 this["QuestUsername"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AmzPassword {
+            get {
+                return ((string)(this["AmzPassword"]));
+            }
+            set {
+                this["AmzPassword"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string QuestPassword {
+            get {
+                return ((string)(this["QuestPassword"]));
+            }
+            set {
+                this["QuestPassword"] = value;
+            }
+        }
     }
 }
