@@ -264,6 +264,16 @@ namespace OnboardLocal
                 Console.WriteLine(e.ToString());
             }
         }
+
+        private void HandleDrugRadio(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void HandleProviderRadio(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     
